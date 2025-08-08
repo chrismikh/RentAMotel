@@ -20,10 +20,10 @@ class MotelMappinSS extends ScriptableSystem {
         sunsetMotelRoleData.m_showOnMiniMap = true;
         sunsetMotelRoleData.m_visibleThroughWalls = false;
         
-        // Add custom fields for our motel
+        // Add custom fields for our motel (localized)
         sunsetMotelRoleData.m_customUsedMotel = true;
-        sunsetMotelRoleData.m_customNameMotel = "Sunset Motel room 102";
-        sunsetMotelRoleData.m_customDescMotel = "Rentable for 24 hours - 250€$";
+        sunsetMotelRoleData.m_customNameMotel = GetLocalizedTextByKey(n"RentMotel-Title-Sunset");
+        sunsetMotelRoleData.m_customDescMotel = GetLocalizedTextByKey(n"RentMotel-Desc-Sunset");
         sunsetMotelRoleData.m_customIconMotel = n"apartment";
         sunsetMotelRoleData.m_customAtlasMotel = r"base\\gameplay\\gui\\common\\icons\\mappin_icons.inkatlas";
         sunsetMotelRoleData.m_customTintMotel = new HDRColor(0.8, 0.6, 0.2, 1.0);
@@ -56,10 +56,10 @@ class MotelMappinSS extends ScriptableSystem {
         kabukiMotelRoleData.m_showOnMiniMap = true;
         kabukiMotelRoleData.m_visibleThroughWalls = false;
 
-        // Custom fields for the new mappin
+        // Custom fields for the new mappin (localized)
         kabukiMotelRoleData.m_customUsedMotel = true;
-        kabukiMotelRoleData.m_customNameMotel = "Kabuki Motel room 203";
-        kabukiMotelRoleData.m_customDescMotel = "Rentable for 24 hours - 500€$";
+        kabukiMotelRoleData.m_customNameMotel = GetLocalizedTextByKey(n"RentMotel-Title-Kabuki");
+        kabukiMotelRoleData.m_customDescMotel = GetLocalizedTextByKey(n"RentMotel-Desc-Kabuki");
         kabukiMotelRoleData.m_customIconMotel = n"apartment";
         kabukiMotelRoleData.m_customAtlasMotel = r"base\\gameplay\\gui\\common\\icons\\mappin_icons.inkatlas";
         kabukiMotelRoleData.m_customTintMotel = new HDRColor(0.8, 0.6, 0.2, 1.0);
@@ -91,10 +91,10 @@ class MotelMappinSS extends ScriptableSystem {
         DewdropInnMotelRoleData.m_showOnMiniMap = true;
         DewdropInnMotelRoleData.m_visibleThroughWalls = false;
 
-        // Custom fields for the new mappin
+        // Custom fields for the new mappin (localized)
         DewdropInnMotelRoleData.m_customUsedMotel = true;
-        DewdropInnMotelRoleData.m_customNameMotel = "Dewdrop Inn Motel room 106";
-        DewdropInnMotelRoleData.m_customDescMotel = "Rentable for 24 hours - 800€$";
+        DewdropInnMotelRoleData.m_customNameMotel = GetLocalizedTextByKey(n"RentMotel-Title-Dewdrop");
+        DewdropInnMotelRoleData.m_customDescMotel = GetLocalizedTextByKey(n"RentMotel-Desc-Dewdrop");
         DewdropInnMotelRoleData.m_customIconMotel = n"apartment";
         DewdropInnMotelRoleData.m_customAtlasMotel = r"base\\gameplay\\gui\\common\\icons\\mappin_icons.inkatlas";
         DewdropInnMotelRoleData.m_customTintMotel = new HDRColor(0.8, 0.6, 0.2, 1.0);

@@ -13,6 +13,28 @@ function ToVector4(tbl)
     return Vector4.new(tbl.x, tbl.y, tbl.z, tbl.w or 1.0)
 end
 
+-- Localization helper (Codeware texts are registered in native localization system)
+function L(key, vars)
+    local text = key
+    local ok, result = pcall(function()
+        if GetLocalizedTextByKey then
+            return GetLocalizedTextByKey(CName.new(key))
+        elseif Game and Game.GetLocalizedTextByKey then
+            return Game.GetLocalizedTextByKey(CName.new(key))
+        end
+        return key
+    end)
+    if ok and type(result) == "string" and #result > 0 then
+        text = result
+    end
+    if vars and type(vars) == "table" then
+        for k, v in pairs(vars) do
+            text = text:gsub("{" .. k .. "}", tostring(v))
+        end
+    end
+    return text
+end
+
 -- Helper function to calculate 3D distance between two Vector4 points
 function GetDistance3D(pos1, pos2)
     if not pos1 or not pos2 then return math.huge end -- Return a large number if one of the positions is nil
@@ -46,6 +68,7 @@ local ROOM_DEFINITIONS = {
     {
         roomId = "sunset_motel_room_102",
         name = "Sunset Motel Room",
+        locKeyRoomName = "RentMotel-Room-Sunset",
         doorHash = 10025113471746604205ULL,
         rentCost = 250,
         location = "Sunset Motel",
@@ -55,6 +78,7 @@ local ROOM_DEFINITIONS = {
     {
         roomId = "kabuki_motel_room_203",
         name = "Kabuki Motel Room",
+        locKeyRoomName = "RentMotel-Room-Kabuki",
         doorHash = 1867170616709106376ULL,
         backDoorHash = 14602689378209513153ULL,
         rentCost = 500,
@@ -65,6 +89,7 @@ local ROOM_DEFINITIONS = {
     {
         roomId = "DewdropInn_motel_room_106",
         name = "Dewdrop Inn Motel Room",
+        locKeyRoomName = "RentMotel-Room-Dewdrop",
         doorHash = 7178334462812897738ULL,
         rentCost = 800,
         location = "Dewdrop Inn Motel",
@@ -92,6 +117,7 @@ function RentMotelManager.initializeRooms()
         RentMotelManager.rooms[roomDef.roomId] = {
             roomId = roomDef.roomId,
             name = roomDef.name,
+            locKeyRoomName = roomDef.locKeyRoomName,
             doorID = EntityID.new({ hash = roomDef.doorHash }),
             doorHash = roomDef.doorHash,
             config = {
@@ -437,20 +463,21 @@ function RentMotelManager.createInteractionHub(roomId)
     if room.config.isDoorLocked then
         -- Option 1: 24 hours
         if playerMoney >= rentCost1Day then
-            table.insert(choices, interactionUI.createChoice("Rent for 24 hours - " .. rentCost1Day .. "€$", nil, gameinteractionsChoiceType.QuestImportant))
+            table.insert(choices, interactionUI.createChoice(L("RentMotel-Choice-24h", { price = rentCost1Day }), nil, gameinteractionsChoiceType.QuestImportant))
         else
-            table.insert(choices, interactionUI.createChoice("24h: Not enough money (" .. rentCost1Day .. "€$)", nil, gameinteractionsChoiceType.Disabled))
+            table.insert(choices, interactionUI.createChoice(L("RentMotel-Choice-24h-NoMoney", { price = rentCost1Day }), nil, gameinteractionsChoiceType.Disabled))
         end
 
         -- Option 2: 7 days
         if playerMoney >= rentCost7Days then
-            table.insert(choices, interactionUI.createChoice("Rent for 7 days - " .. rentCost7Days .. "€$ (10% off daily)", nil, gameinteractionsChoiceType.QuestImportant))
+            table.insert(choices, interactionUI.createChoice(L("RentMotel-Choice-7d", { price = rentCost7Days }), nil, gameinteractionsChoiceType.QuestImportant))
         else
-            table.insert(choices, interactionUI.createChoice("7d: Not enough money (" .. rentCost7Days .. "€$)", nil, gameinteractionsChoiceType.Disabled))
+            table.insert(choices, interactionUI.createChoice(L("RentMotel-Choice-7d-NoMoney", { price = rentCost7Days }), nil, gameinteractionsChoiceType.Disabled))
         end
     end
 
-    return interactionUI.createHub(room.name, choices, gameinteractionsvisEVisualizerActivityState.Active)
+    local hubTitle = room.locKeyRoomName and L(room.locKeyRoomName) or room.name
+    return interactionUI.createHub(hubTitle, choices, gameinteractionsvisEVisualizerActivityState.Active)
 end
 
 -- Configures interaction callbacks (e.g. Rent → UnlockDoor)
@@ -584,9 +611,9 @@ function ShowHallwayDoorInteraction()
     interactionUI.clearCallbacks() -- Clear any previous callbacks if we are taking over
 
     local choices = {}
-    table.insert(choices, interactionUI.createChoice("Open Door", nil, gameinteractionsChoiceType.Default))
+    table.insert(choices, interactionUI.createChoice(L("RentMotel-UI-OpenDoor"), nil, gameinteractionsChoiceType.Default))
     
-    local hub = interactionUI.createHub("Hallway Door", choices, gameinteractionsvisEVisualizerActivityState.Active)
+    local hub = interactionUI.createHub(L("RentMotel-UI-HallwayDoor"), choices, gameinteractionsvisEVisualizerActivityState.Active)
     if hub then
         interactionUI.setupHub(hub)
         interactionUI.registerChoiceCallback(1, function() -- Callback for the first (and only) choice
