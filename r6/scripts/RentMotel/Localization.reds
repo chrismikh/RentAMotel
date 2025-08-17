@@ -25,20 +25,24 @@ public class English extends ModLocalizationPackage {
     this.Text("RentMotel-Room-Sunset", "Sunset Motel Room");
     this.Text("RentMotel-Room-Kabuki", "Kabuki Motel Room");
     this.Text("RentMotel-Room-Dewdrop", "Dewdrop Inn Motel Room");
+    this.Text("RentMotel-Room-NoTell", "No-Tell Motel Room");
 
     // Mappin titles
     this.Text("RentMotel-Title-Sunset", "Sunset Motel room 102");
     this.Text("RentMotel-Title-Kabuki", "Kabuki Motel room 203");
     this.Text("RentMotel-Title-Dewdrop", "Dewdrop Inn Motel room 106");
+    this.Text("RentMotel-Title-NoTell", "No-Tell Motel room 204");
 
     // Mappin descriptions
     this.Text("RentMotel-Desc-Sunset", "Rentable for 24 hours - 250€$");
     this.Text("RentMotel-Desc-Kabuki", "Rentable for 24 hours - 500€$");
     this.Text("RentMotel-Desc-Dewdrop", "Rentable for 24 hours - 800€$");
+    this.Text("RentMotel-Desc-NoTell", "Rentable for 24 hours - 400€$");
 
     // UI strings
     this.Text("RentMotel-UI-OpenDoor", "Open Door");
     this.Text("RentMotel-UI-HallwayDoor", "Hallway Door");
+    this.Text("RentMotel-UI-CloseDoor", "Close Door");
 
     // Interaction choices with placeholders
     this.Text("RentMotel-Choice-24h", "Rent for 24 hours - {price}€$");
@@ -58,20 +62,24 @@ public class Russian extends ModLocalizationPackage {
     this.Text("RentMotel-Room-Sunset", "Комната Мотеля Сансет");
     this.Text("RentMotel-Room-Kabuki", "Комната Мотеля Кабуки");
     this.Text("RentMotel-Room-Dewdrop", "Комната Мотеля Дьюдроп Инн");
+    this.Text("RentMotel-Room-NoTell", "Комната Мотеля Но-Телл");
 
     // Mappin titles
     this.Text("RentMotel-Title-Sunset", "Мотель Сансет, комната 102");
     this.Text("RentMotel-Title-Kabuki", "Мотель Кабуки, комната 203");
     this.Text("RentMotel-Title-Dewdrop", "Мотель Дьюдроп Инн, комната 106");
+    this.Text("RentMotel-Title-NoTell", "Мотель Но-Телл, комната 204");
 
     // Mappin descriptions
     this.Text("RentMotel-Desc-Sunset", "Аренда на 24 часа - 250€$");
     this.Text("RentMotel-Desc-Kabuki", "Аренда на 24 часа - 500€$");
     this.Text("RentMotel-Desc-Dewdrop", "Аренда на 24 часа - 800€$");
+    this.Text("RentMotel-Desc-NoTell", "Аренда на 24 часа - 400€$");
 
     // UI strings
     this.Text("RentMotel-UI-OpenDoor", "Открыть дверь");
     this.Text("RentMotel-UI-HallwayDoor", "Дверь в коридор");
+    this.Text("RentMotel-UI-CloseDoor", "Закрыть дверь");
 
     // Interaction choices with placeholders
     this.Text("RentMotel-Choice-24h", "Арендовать на 24 часа - {price}€$");
@@ -91,20 +99,24 @@ public class French extends ModLocalizationPackage {
     this.Text("RentMotel-Room-Sunset", "Chambre du Sunset Motel");
     this.Text("RentMotel-Room-Kabuki", "Chambre du Kabuki Motel");
     this.Text("RentMotel-Room-Dewdrop", "Chambre du Dewdrop Inn Motel");
+    this.Text("RentMotel-Room-NoTell", "Chambre du No-Tell Motel");
 
     // Mappin titles
     this.Text("RentMotel-Title-Sunset", "Sunset Motel chambre 102");
     this.Text("RentMotel-Title-Kabuki", "Kabuki Motel chambre 203");
     this.Text("RentMotel-Title-Dewdrop", "Dewdrop Inn Motel chambre 106");
+    this.Text("RentMotel-Title-NoTell", "No-Tell Motel chambre 204");
 
     // Mappin descriptions
     this.Text("RentMotel-Desc-Sunset", "Louable pour 24 heures - 250€$");
     this.Text("RentMotel-Desc-Kabuki", "Louable pour 24 heures - 500€$");
     this.Text("RentMotel-Desc-Dewdrop", "Louable pour 24 heures - 800€$");
+    this.Text("RentMotel-Desc-NoTell", "Louable pour 24 heures - 400€$");
 
     // UI strings
     this.Text("RentMotel-UI-OpenDoor", "Ouvrir la Porte");
     this.Text("RentMotel-UI-HallwayDoor", "Couloir");
+    this.Text("RentMotel-UI-CloseDoor", "Fermer la Porte");
 
     // Interaction choices with placeholders
     this.Text("RentMotel-Choice-24h", "Louer pour 24 heures - {price}€$");
@@ -124,20 +136,24 @@ public class BrazilianPortuguese extends ModLocalizationPackage {
     this.Text("RentMotel-Room-Sunset", "Quarto do Motel Sunset");
     this.Text("RentMotel-Room-Kabuki", "Quarto do Motel Kabuki");
     this.Text("RentMotel-Room-Dewdrop", "Quarto da Pousada Dewdrop");
+    this.Text("RentMotel-Room-NoTell", "Quarto do Motel No-Tell");
 
     // Mappin titles
     this.Text("RentMotel-Title-Sunset", "Motel Sunset quarto 102");
     this.Text("RentMotel-Title-Kabuki", "Motel Kabuki quarto 203");
     this.Text("RentMotel-Title-Dewdrop", "Pousada Dewdrop quarto 106");
+    this.Text("RentMotel-Title-NoTell", "Motel No-Tell quarto 204");
 
     // Mappin descriptions
     this.Text("RentMotel-Desc-Sunset", "Alugável por 24 horas - 250€$");
     this.Text("RentMotel-Desc-Kabuki", "Alugável por 24 horas - 500€$");
     this.Text("RentMotel-Desc-Dewdrop", "Alugável por 24 horas - 800€$");
+    this.Text("RentMotel-Desc-NoTell", "Alugável por 24 horas - 400€$");
 
     // UI strings
     this.Text("RentMotel-UI-OpenDoor", "Abrir porta");
     this.Text("RentMotel-UI-HallwayDoor", "Porta do corredor");
+    this.Text("RentMotel-UI-CloseDoor", "Fechar porta");
 
     // Interaction choices with placeholders
     this.Text("RentMotel-Choice-24h", "Aluguel por 24 horas - {price}€$");
@@ -157,20 +173,24 @@ public class Spanish extends ModLocalizationPackage {
     this.Text("RentMotel-Room-Sunset", "Habitación del Motel Sunset");
     this.Text("RentMotel-Room-Kabuki", "Habitación del Motel Kabuki");
     this.Text("RentMotel-Room-Dewdrop", "Habitación del Motel Dewdrop Inn");
+    this.Text("RentMotel-Room-NoTell", "Habitación del Motel No-Tell");
 
     // Mappin titles
     this.Text("RentMotel-Title-Sunset", "Habitación Disponible - Motel Sunset 102");
     this.Text("RentMotel-Title-Kabuki", "Habitación Disponible - Motel Kabuki 203");
     this.Text("RentMotel-Title-Dewdrop", "Habitación Disponible - Dewdrop Inn 106");
+    this.Text("RentMotel-Title-NoTell", "Habitación Disponible - No-Tell Motel 204");
 
     // Mappin descriptions
     this.Text("RentMotel-Desc-Sunset", "Alquiler por 24 horas - 250€$");
     this.Text("RentMotel-Desc-Kabuki", "Alquiler por 24 horas - 500€$");
     this.Text("RentMotel-Desc-Dewdrop", "Alquiler por 24 horas - 800€$");
+    this.Text("RentMotel-Desc-NoTell", "Alquiler por 24 horas - 400€$");
 
     // UI strings
     this.Text("RentMotel-UI-OpenDoor", "Abrir puerta");
     this.Text("RentMotel-UI-HallwayDoor", "Puerta del pasillo");
+    this.Text("RentMotel-UI-CloseDoor", "Cerrar puerta");
 
     // Interaction choices with placeholders
     this.Text("RentMotel-Choice-24h", "Alquilar por 24 horas - {price}€$");

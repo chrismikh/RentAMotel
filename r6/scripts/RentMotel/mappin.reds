@@ -109,6 +109,45 @@ class MotelMappinSS extends ScriptableSystem {
 
         let DewdropInnMotelID: NewMappinID = GameInstance.GetMappinSystem(GetGameInstance()).RegisterMappin(DewdropInnMotelMappinData, DewdropInnMotelMappinPos);
         ArrayPush(this.mappinIDs, DewdropInnMotelID);
+
+        ////////////////////////////////////////////////////////////////////////////
+
+        // No-Tell Motel mappin (only after The Heist)
+        let qs: ref<QuestsSystem> = GameInstance.GetQuestsSystem(GetGameInstance());
+        if IsDefined(qs) && qs.GetFact(n"q005_done") == 1 {
+            let noTellPos: Vector4;
+            // TODO: fill with No-Tell world coords
+            noTellPos.X = -1127.5381;
+            noTellPos.Y = 1320.9652;
+            noTellPos.Z = 28.0;
+            noTellPos.W = 1.0;
+
+            let noTellRoleData: ref<GameplayRoleMappinData> = new GameplayRoleMappinData();
+            noTellRoleData.m_range = 100.0;
+            noTellRoleData.m_mappinVisualState = EMappinVisualState.Default;
+            noTellRoleData.m_gameplayRole = EGameplayRole.ServicePoint;
+            noTellRoleData.m_showOnMiniMap = true;
+            noTellRoleData.m_visibleThroughWalls = false;
+
+            // Custom fields (localized)
+            noTellRoleData.m_customUsedMotel = true;
+            noTellRoleData.m_customNameMotel = GetLocalizedTextByKey(n"RentMotel-Title-NoTell");
+            noTellRoleData.m_customDescMotel = GetLocalizedTextByKey(n"RentMotel-Desc-NoTell");
+            noTellRoleData.m_customIconMotel = n"apartment";
+            noTellRoleData.m_customAtlasMotel = r"base\\gameplay\\gui\\common\\icons\\mappin_icons.inkatlas";
+            noTellRoleData.m_customTintMotel = new HDRColor(0.8, 0.6, 0.2, 1.0);
+
+            let noTellData: MappinData = new MappinData();
+            noTellData.mappinType = t"Mappins.DefaultStaticMappin";
+            noTellData.variant = gamedataMappinVariant.Zzz05_ApartmentToPurchaseVariant;
+            noTellData.active = true;
+            noTellData.debugCaption = "No-Tell Motel Room Mappin";
+            noTellData.visibleThroughWalls = false;
+            noTellData.scriptData = noTellRoleData;
+
+            let noTellID: NewMappinID = GameInstance.GetMappinSystem(GetGameInstance()).RegisterMappin(noTellData, noTellPos);
+            ArrayPush(this.mappinIDs, noTellID);
+        }
     }
 
     public func RemoveMotelMappin() {
