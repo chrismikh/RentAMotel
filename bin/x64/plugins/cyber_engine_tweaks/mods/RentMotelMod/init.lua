@@ -2,21 +2,11 @@ local Cron = require("modules/Cron")
 local GameSession = require("modules/GameSession")
 local interactionUI = require("modules/interactionUI")
 
--- Dewdrop Inn Custom Interaction (not bound to door entity)
--- This creates a trigger area for the Dewdrop Inn, as its door entity might be problematic.
-local dewdropCustomInteraction = {
-    active = false,
-    playerNear = false,
-    position = { x = -563.6, y = -814.75, z = 8.2 }, -- The center of the interaction trigger
-    range = 1.0 -- The radius of the trigger area
-}
-
 -- Hallway Door Configuration
 -- This is for a generic, non-rentable door that the player can open and close.
 local HALLWAY_DOOR_HASH = 10866749775532408022ULL
 local hallwayDoorEntityID = nil
 local isHallwayDoorInteractionActive = false
-local isPlayerNearHallwayDoor = false
 local lastKnownHallwayDoorOpen = false
 
 -- Localization helper (Codeware texts are registered in native localization system)
@@ -67,45 +57,41 @@ end
 local ROOM_DEFINITIONS = {
     {
         roomId = "sunset_motel_room_102",
-        name = "Sunset Motel Room",
         locKeyRoomName = "RentMotel-Room-Sunset",
         doorHash = 10025113471746604205ULL, -- The unique hash for the room's main door entity
-        rentCost = 250,
-        location = "Sunset Motel",
+        paymentTerminalHash = 2454332936290437600ULL, -- Payment terminal hash entity
+        rentCost = 450,
         -- The 3D boundaries of the room's interior
         roomBoundsMin = { x = 1657.0, y = -796.3, z = 49.5 },
         roomBoundsMax = { x = 1666.6, y = -785.2, z = 52.9 }
     },
     {
         roomId = "kabuki_motel_room_203",
-        name = "Kabuki Motel Room",
         locKeyRoomName = "RentMotel-Room-Kabuki",
         doorHash = 1867170616709106376ULL,
         backDoorHash = 14602689378209513153ULL,
-        rentCost = 500,
-        location = "Kabuki Motel",
-        roomBoundsMin = { x = -1247.9869, y = 1970.6674, z = 11.7 },
-        roomBoundsMax = { x = -1243.4186, y = 1983.5032, z = 14.8 }
+        paymentTerminalHash = 8068600755530504000ULL,
+        rentCost = 700,
+        roomBoundsMin = { x = -1248.5, y = 1969.0, z = 11.7 },
+        roomBoundsMax = { x = -1238.0, y = 1982.3, z = 14.8 }
     },
     {
         roomId = "DewdropInn_motel_room_106",
-        name = "Dewdrop Inn Motel Room",
         locKeyRoomName = "RentMotel-Room-Dewdrop",
         doorHash = 7178334462812897738ULL,
-        rentCost = 800,
-        location = "Dewdrop Inn Motel",
-        roomBoundsMin = { x = -564.5563, y = -821.5, z = 8.0 },
+        paymentTerminalHash = 4029866856386479600ULL,
+        rentCost = 1000,
+        roomBoundsMin = { x = -562.80, y = -821.5, z = 8.0 },
         roomBoundsMax = { x = -554.1, y = -812.1, z = 11.2 },
     },
     {
-        roomId = "NoTell_motel_room_204",
-        name = "No Tell Motel Room",
+        roomId = "NoTell_motel_room_206",
         locKeyRoomName = "RentMotel-Room-NoTell",
-        doorHash = 14087530378419798291ULL,
-        rentCost = 400,
-        location = "No Tell Motel",
-        roomBoundsMin = { x = -1136.5, y = 1321.9, z = 27.9 },
-	    roomBoundsMax = { x = -1126.0, y = 1333.3, z = 31.0 }
+        doorHash = 7494599788290938000ULL,
+        paymentTerminalHash = 7352168567788151353ULL,
+        rentCost = 700,
+        roomBoundsMin = { x = -1139.0, y = 1307.185,  z = 27.9 },
+        roomBoundsMax = { x = -1127.6685, y = 1319.1003, z = 31.0 }
     }
 }
 
@@ -118,7 +104,7 @@ RentMotelManager = {
     activeInteractionRoomId = nil, -- Tracks which room UI is currently displayed
     hasRestoredData = false, -- Flag indicating if data was loaded from a save
     serializableForPersistence = {}, -- Data that gets written to the save file
-    heistCompleted = false -- Tracks if the player has completed "The Heist" quest
+    playerNearTerminal = false -- Tracks if player is near any payment terminal
 }
 
 -- Populates the RentMotelManager.rooms table with initial data for each room
@@ -128,10 +114,11 @@ function RentMotelManager.initializeRooms()
     for _, roomDef in ipairs(ROOM_DEFINITIONS) do
         RentMotelManager.rooms[roomDef.roomId] = {
             roomId = roomDef.roomId,
-            name = roomDef.name,
             locKeyRoomName = roomDef.locKeyRoomName,
             doorID = EntityID.new({ hash = roomDef.doorHash }),
             doorHash = roomDef.doorHash,
+            paymentTerminalID = roomDef.paymentTerminalHash and EntityID.new({ hash = roomDef.paymentTerminalHash }) or nil,
+            paymentTerminalHash = roomDef.paymentTerminalHash,
             config = {
                 doorLockedByDefault = true,
                 isDoorLocked = true,
@@ -142,9 +129,8 @@ function RentMotelManager.initializeRooms()
                 physicalInsideCheckDoneAtExpiry = false
             },
             interactionActive = false,
-            playerNearDoor = false,
-            doorSynced = false,
-            lastKnownDoorOpen = false
+            playerNearTerminal = false,
+            doorSynced = false
         }
 
         -- If a secondary door (backDoorHash) is defined, schedule it to be permanently locked
@@ -195,8 +181,8 @@ function RentMotelManager.getSerializableRooms()
     for roomId, room in pairs(RentMotelManager.rooms) do
         serializableRooms[roomId] = {
             roomId = room.roomId,
-            name = room.name,
             doorHash = room.doorHash,
+            paymentTerminalHash = room.paymentTerminalHash,
             config = room.config,
         }
     end
@@ -258,7 +244,6 @@ function RentMotelManager.resetRoomsToDefault()
         room.config.doorUnlockExpirySeconds = nil
         room.doorSynced = false
         room.interactionActive = false
-        room.playerNearDoor = false
     end
 end
 
@@ -302,7 +287,6 @@ function LockDoor(roomId)
         if ps then
             room.config.isDoorLocked = true
             room.config.doorUnlockExpirySeconds = nil
-            room.lastKnownDoorOpen = false
             
             door:CloseDoor()
             
@@ -335,8 +319,11 @@ function UnlockDoor(roomId, durationInHours, costToCharge)
                     return
                 end
 
-                local success = ts:RemoveMoney(player, costToCharge, "money")
-                if success then
+                if ts:RemoveMoney(player, costToCharge, "money") then
+                    -- Hide interaction FIRST before unlocking
+                    RentMotelManager.hideInteraction(roomId)
+                    
+                    -- Then proceed with unlocking
                     -- Unseal the door first (if it's sealed)
                     if ps:IsSealed() then
                         ps:ToggleSealOnDoor()
@@ -359,15 +346,6 @@ function UnlockDoor(roomId, durationInHours, costToCharge)
                     Cron.After(0.2, function()
                         door:OpenDoor()
                     end)
-                    
-                    RentMotelManager.hideInteraction(roomId)
-                    -- If this is the No Tell Motel room, immediately present the door control hub
-                    if roomId == "NoTell_motel_room_204" then
-                        room.lastKnownDoorOpen = true
-                        Cron.After(0.35, function()
-                            RentMotelManager.showInteraction(roomId)
-                        end)
-                    end
                 end
             end
         end
@@ -451,48 +429,26 @@ function RentMotelManager.createInteractionHub(roomId)
     
     local choices = {}
     local player = Game.GetPlayer()
+    if not player then return nil end
+    
     local ts = Game.GetTransactionSystem()
+    if not ts then return nil end
+    
     local playerMoney = ts:GetItemQuantity(player, MarketSystem.Money())
 
     local rentCost1Day = room.config.rentCost
-    local rentCost7Days = math.floor(rentCost1Day * 7 * 0.9) -- 10% discount per day for 7 days (total 6.3 * daily rate)
-
-    -- Gate No Tell Motel until "The Heist" is completed
-    if roomId == "NoTell_motel_room_204" and not RentMotelManager.heistCompleted and room.config.isDoorLocked then
-        return nil
-    end
+    local rentCost7Days = math.floor(rentCost1Day * 7 * 0.9) -- 10% discount per day for 7 days
 
     if room.config.isDoorLocked then
         choices = createRentalChoices(rentCost1Day, rentCost7Days, playerMoney)
     end
 
-    local hubTitle = room.locKeyRoomName and L(room.locKeyRoomName) or room.name
+    local hubTitle = L(room.locKeyRoomName)
     local activityState = gameinteractionsvisEVisualizerActivityState.Active
     
     local hub = interactionUI.createHub(hubTitle, choices, activityState)
     
     return hub
-end
-
--- Creates a simple door control interaction hub (Open/Close) for unlocked rooms
-function RentMotelManager.createDoorControlHub(roomId)
-    local room = RentMotelManager.getRoom(roomId)
-    if not room then return nil end
-
-    local choices = {}
-    -- Gate No Tell Motel door controls until "The Heist" is completed
-    if roomId == "NoTell_motel_room_204" and not RentMotelManager.heistCompleted then
-        return nil
-    end
-
-    if room.lastKnownDoorOpen then
-        table.insert(choices, interactionUI.createChoice(L("RentMotel-UI-CloseDoor"), nil, gameinteractionsChoiceType.Default))
-    else
-        table.insert(choices, interactionUI.createChoice(L("RentMotel-UI-OpenDoor"), nil, gameinteractionsChoiceType.Default))
-    end
-
-    local hubTitle = room.locKeyRoomName and L(room.locKeyRoomName) or room.name
-    return interactionUI.createHub(hubTitle, choices, gameinteractionsvisEVisualizerActivityState.Active)
 end
 
 -- Configures interaction callbacks
@@ -502,11 +458,6 @@ function RentMotelManager.setupInteractionCallbacks(roomId)
     if not room then return end
     
     interactionUI.clearCallbacks()
-
-    -- Prevent renting No Tell Motel until "The Heist" is completed
-    if roomId == "NoTell_motel_room_204" and room.config.isDoorLocked and not RentMotelManager.heistCompleted then
-        return
-    end
 
     local player = Game.GetPlayer()
     local ts = Game.GetTransactionSystem()
@@ -520,7 +471,6 @@ function RentMotelManager.setupInteractionCallbacks(roomId)
         if playerMoney >= rentCost1Day then
             interactionUI.registerChoiceCallback(1, function()
                 UnlockDoor(roomId, 24, rentCost1Day) -- durationInHours = 24, costToCharge = rentCost1Day
-                RentMotelManager.hideInteraction(roomId)
             end)
         end
 
@@ -528,42 +478,7 @@ function RentMotelManager.setupInteractionCallbacks(roomId)
         if playerMoney >= rentCost7Days then
             interactionUI.registerChoiceCallback(2, function()
                 UnlockDoor(roomId, 7 * 24, rentCost7Days) -- durationInHours = 168, costToCharge = rentCost7Days
-                RentMotelManager.hideInteraction(roomId)
             end)
-        end
-    else
-        -- Door control callbacks for unlocked No Tell Motel room only
-        if roomId == "NoTell_motel_room_204" then
-            if room.lastKnownDoorOpen then
-                -- Only one choice visible: Close door (index 1)
-                interactionUI.registerChoiceCallback(1, function()
-                    local door = Game.FindEntityByID(room.doorID)
-                    if door then
-                        door:CloseDoor()
-                        room.lastKnownDoorOpen = false
-                        RentMotelManager.updateInteractionHub(roomId)
-                    end
-                end)
-            else
-                -- Only one choice visible: Open door (index 1)
-                interactionUI.registerChoiceCallback(1, function()
-                    local door = Game.FindEntityByID(room.doorID)
-                    if door then
-                        local ps = door:GetDevicePS()
-                        if ps then
-                            if ps:IsSealed() then ps:ToggleSealOnDoor() end
-                            if ps:IsLocked() then ps:ToggleLockOnDoor() end
-                        end
-                        Cron.After(0.1, function()
-                            door:OpenDoor()
-                        end)
-                        room.lastKnownDoorOpen = true
-                        Cron.After(0.15, function()
-                            RentMotelManager.updateInteractionHub(roomId)
-                        end)
-                    end
-                end)
-            end
         end
     end
 end
@@ -573,21 +488,8 @@ function RentMotelManager.updateInteractionHub(roomId)
     local room = RentMotelManager.getRoom(roomId)
     if not room then return end
     
-    -- Do not show or update any interaction for No Tell until The Heist is completed
-    if roomId == "NoTell_motel_room_204" and not RentMotelManager.heistCompleted then
-        if room.interactionActive then
-            RentMotelManager.hideInteraction(roomId)
-        end
-        return
-    end
-    
     if room.interactionActive then
-        local hub = nil
-        if room.config.isDoorLocked then
-            hub = RentMotelManager.createInteractionHub(roomId)
-        elseif roomId == "NoTell_motel_room_204" then
-            hub = RentMotelManager.createDoorControlHub(roomId)
-        end
+        local hub = RentMotelManager.createInteractionHub(roomId)
         if hub then
             interactionUI.setupHub(hub)
             RentMotelManager.setupInteractionCallbacks(roomId)
@@ -596,42 +498,14 @@ function RentMotelManager.updateInteractionHub(roomId)
     end
 end
 
--- Shows room interaction hub when near door (single hub only)
+-- Shows room interaction hub when near payment terminal
 function RentMotelManager.showInteraction(roomId)
     local room = RentMotelManager.getRoom(roomId)
     if not room then return end
-    
-    -- If No Tell and The Heist isn't completed, do not show any interaction
-    if roomId == "NoTell_motel_room_204" and not RentMotelManager.heistCompleted then
-        if room.interactionActive then
-            RentMotelManager.hideInteraction(roomId)
-        end
-        return
-    end
 
-    -- Do not show rent UI if the player is physically inside the same room bounds (applies to locked rooms)
-    if room.config.isDoorLocked then
-        local player = Game.GetPlayer()
-        local playerPos = player and player:GetWorldPosition()
-        local roomDef = getRoomDefinitionById(roomId)
-        if playerPos and roomDef and roomDef.roomBoundsMin and roomDef.roomBoundsMax then
-            if IsPlayerPhysicallyInsideRoom(playerPos, roomDef.roomBoundsMin, roomDef.roomBoundsMax) then
-                if room.interactionActive then
-                    RentMotelManager.hideInteraction(roomId)
-                end
-                return
-            end
-        end
-    end
-
+    -- If the door is already unlocked, do not show any interaction hub.
     if not room.config.isDoorLocked then
-        -- By default, do not show a hub when unlocked, except for the No Tell Motel
-        if roomId ~= "NoTell_motel_room_204" then
-            if room.interactionActive then
-                RentMotelManager.hideInteraction(roomId)
-            end
-            return
-        end
+        return
     end
 
     -- Hide any other active interactions first
@@ -639,26 +513,20 @@ function RentMotelManager.showInteraction(roomId)
         RentMotelManager.hideInteraction(RentMotelManager.activeInteractionRoomId)
     end
     
-    -- Also hide dewdrop custom interaction if it's active
-    if dewdropCustomInteraction.active then
-        HideDewdropCustomInteraction()
+    -- Also hide hallway door interaction if it's active
+    if isHallwayDoorInteractionActive then
+        HideHallwayDoorInteraction()
     end
 
     if not room.interactionActive then
         room.interactionActive = true
         RentMotelManager.activeInteractionRoomId = roomId
         
-        local hub = nil
-        if room.config.isDoorLocked then
-            hub = RentMotelManager.createInteractionHub(roomId)
-        elseif roomId == "NoTell_motel_room_204" then
-            hub = RentMotelManager.createDoorControlHub(roomId)
-        end
+        local hub = RentMotelManager.createInteractionHub(roomId)
         if hub then
             interactionUI.setupHub(hub)
             RentMotelManager.setupInteractionCallbacks(roomId)
             interactionUI.showHub()
-        else
         end
     end
 end
@@ -669,11 +537,15 @@ function RentMotelManager.hideInteraction(roomId)
     if not room then return end
     
     if room.interactionActive then
+        -- Clear callbacks and hide hub FIRST
+        interactionUI.clearCallbacks()
+        interactionUI.hideHub()
+        
+        -- Then update state flags
         room.interactionActive = false
         if RentMotelManager.activeInteractionRoomId == roomId then
             RentMotelManager.activeInteractionRoomId = nil
         end
-        interactionUI.hideHub()
     end
 end
 
@@ -725,65 +597,7 @@ function HideHallwayDoorInteraction()
     end
 end
 
--- Dewdrop Inn Custom Interaction Functions (Position-Based)
--- These functions handle the special interaction for the Dewdrop Inn, which is based on player position, not a door entity.
-function ShowDewdropCustomInteraction()
-    if dewdropCustomInteraction.active or (RentMotelManager and RentMotelManager.activeInteractionRoomId) then 
-        return 
-    end
-
-    interactionUI.clearCallbacks()
-
-    local room = RentMotelManager.getRoom("DewdropInn_motel_room_106")
-    if not room or not room.config.isDoorLocked then
-        return -- Only show for locked rooms
-    end
-
-    local player = Game.GetPlayer()
-    local ts = Game.GetTransactionSystem()
-    local playerMoney = ts:GetItemQuantity(player, MarketSystem.Money())
-    local rentCost1Day = room.config.rentCost
-    local rentCost7Days = math.floor(rentCost1Day * 7 * 0.9)
-
-    local choices = createRentalChoices(rentCost1Day, rentCost7Days, playerMoney)
-    
-    local hubTitle = L("RentMotel-Room-Dewdrop")
-    local hub = interactionUI.createHub(hubTitle, choices, gameinteractionsvisEVisualizerActivityState.Active)
-    if hub then
-        hub.hubPriority = 15 -- Very high priority
-        hub.id = 80000 -- Unique ID for custom Dewdrop interaction
-        
-        interactionUI.setupHub(hub)
-        
-        -- Setup callbacks
-        if playerMoney >= rentCost1Day then
-            interactionUI.registerChoiceCallback(1, function()
-                UnlockDoor("DewdropInn_motel_room_106", 24, rentCost1Day)
-                HideDewdropCustomInteraction()
-            end)
-        end
-
-        if playerMoney >= rentCost7Days then
-            interactionUI.registerChoiceCallback(2, function()
-                UnlockDoor("DewdropInn_motel_room_106", 7 * 24, rentCost7Days)
-                HideDewdropCustomInteraction()
-            end)
-        end
-        
-        interactionUI.showHub()
-        dewdropCustomInteraction.active = true
-    end
-end
-
-function HideDewdropCustomInteraction()
-    if dewdropCustomInteraction.active then
-        interactionUI.hideHub()
-        interactionUI.clearCallbacks()
-        dewdropCustomInteraction.active = false
-    end
-end
-
--- Checks player proximity to all room doors
+-- Checks player proximity to all payment terminals (and doors for sync)
 -- Manages interaction UI visibility and initial sync
 function RentMotelManager.checkPlayerProximity()
     if not RentMotelManager.ready then return end
@@ -792,40 +606,46 @@ function RentMotelManager.checkPlayerProximity()
     if not player then return end
     
     local playerPos = player:GetWorldPosition()
-    local activeProximityTarget = { type = nil, id = nil } -- Priority: Room > Dewdrop > Hallway
+    local activeProximityTarget = { type = nil, id = nil } -- Priority: Room Terminal > Hallway
 
-    -- 1. Check for room proximity (highest priority)
+    -- Check if player is inside ANY room boundaries
+    local isPlayerInsideAnyRoom = false
     for roomId, room in pairs(RentMotelManager.rooms) do
-        if roomId ~= "DewdropInn_motel_room_106" then
-            local door = Game.FindEntityByID(room.doorID)
-            if door then
-                if not room.doorSynced then
-                    SyncDoorStateWithSavedState(roomId)
-                    room.doorSynced = true
-                end
+        local roomDef = getRoomDefinitionById(roomId)
+        if roomDef and roomDef.roomBoundsMin and roomDef.roomBoundsMax then
+            if IsPlayerPhysicallyInsideRoom(playerPos, roomDef.roomBoundsMin, roomDef.roomBoundsMax) then
+                isPlayerInsideAnyRoom = true
+                break
+            end
+        end
+    end
+
+    -- 1. Check for payment terminal proximity (highest priority for room interactions)
+    for roomId, room in pairs(RentMotelManager.rooms) do
+        -- Sync door state on first spawn
+        local door = Game.FindEntityByID(room.doorID)
+        if door and not room.doorSynced then
+            SyncDoorStateWithSavedState(roomId)
+            room.doorSynced = true
+        end
+        
+        -- Check payment terminal proximity if it exists (only if player is NOT inside any room)
+        if not isPlayerInsideAnyRoom and room.paymentTerminalID then
+            local terminal = Game.FindEntityByID(room.paymentTerminalID)
+            if terminal then
+                local termPos = terminal:GetWorldPosition()
+                local distanceSquared = (playerPos.x - termPos.x)^2 + (playerPos.y - termPos.y)^2 + (playerPos.z - termPos.z)^2
                 
-                local doorPos = door:GetWorldPosition()
-                local distanceSquared = (playerPos.x - doorPos.x)^2 + (playerPos.y - doorPos.y)^2 + (playerPos.z - doorPos.z)^2
-                
-                if distanceSquared < 4.0 then -- 2.0 squared
+                if distanceSquared < 4.0 then -- Within 2 meters
                     activeProximityTarget = { type = "room", id = roomId }
-                    break -- Found a room, no need to check others
+                    break -- Found a terminal, no need to check others
                 end
             end
         end
     end
 
-    -- 2. If no room is in range, check for Dewdrop Inn custom interaction
-    if not activeProximityTarget.type then
-        local dewdropPos = dewdropCustomInteraction.position
-        local distanceSquared_dew = (playerPos.x - dewdropPos.x)^2 + (playerPos.y - dewdropPos.y)^2 + (playerPos.z - dewdropPos.z)^2
-        if distanceSquared_dew < (dewdropCustomInteraction.range * dewdropCustomInteraction.range) then
-            activeProximityTarget = { type = "dewdrop" }
-        end
-    end
-
-    -- 3. If still no target, check for the hallway door
-    if not activeProximityTarget.type and hallwayDoorEntityID then
+    -- 2. If no terminal is in range, check for the hallway door (only if player is NOT inside any room)
+    if not isPlayerInsideAnyRoom and not activeProximityTarget.type and hallwayDoorEntityID then
         local hallwayDoorEntity = Game.FindEntityByID(hallwayDoorEntityID)
         if hallwayDoorEntity then
             local hallwayDoorPos = hallwayDoorEntity:GetWorldPosition()
@@ -836,17 +656,13 @@ function RentMotelManager.checkPlayerProximity()
         end
     end
 
-    -- 4. Now, manage the active interactions based on the single target found
+    -- 3. Now, manage the active interactions based on the single target found
     local roomInteractionIsActive = RentMotelManager.activeInteractionRoomId ~= nil
-    local dewdropIsActive = dewdropCustomInteraction.active
     local hallwayIsActive = isHallwayDoorInteractionActive
 
     -- Hide interactions that should NOT be active
     if roomInteractionIsActive and (activeProximityTarget.type ~= "room" or activeProximityTarget.id ~= RentMotelManager.activeInteractionRoomId) then
         RentMotelManager.hideInteraction(RentMotelManager.activeInteractionRoomId)
-    end
-    if dewdropIsActive and activeProximityTarget.type ~= "dewdrop" then
-        HideDewdropCustomInteraction()
     end
     if hallwayIsActive and activeProximityTarget.type ~= "hallway" then
         HideHallwayDoorInteraction()
@@ -855,8 +671,6 @@ function RentMotelManager.checkPlayerProximity()
     -- Show the one interaction that SHOULD be active
     if activeProximityTarget.type == "room" and not roomInteractionIsActive then
         RentMotelManager.showInteraction(activeProximityTarget.id)
-    elseif activeProximityTarget.type == "dewdrop" and not dewdropIsActive then
-        ShowDewdropCustomInteraction()
     elseif activeProximityTarget.type == "hallway" and not hallwayIsActive then
         ShowHallwayDoorInteraction()
     end
@@ -876,18 +690,6 @@ registerForEvent("onInit", function()
     if HALLWAY_DOOR_HASH then
         hallwayDoorEntityID = EntityID.new({ hash = HALLWAY_DOOR_HASH })
     end
-
-    -- Check Heist completion once after the player puppet attaches
-    ObserveAfter('PlayerPuppet', 'OnGameAttached', function()
-        -- Check heist status once on initialization
-        local heistQuestFact = Game.GetQuestsSystem():GetFactStr("q005_done")
-        if heistQuestFact == 1 then
-            RentMotelManager.heistCompleted = true
-            --print("[RentMotelMod] Heist mission is completed. No tell motel will be available.")
-        else
-            --print("[RentMotelMod] Heist mission not completed. No tell motel will be unavailable.")
-        end
-    end)
 
     -- Initialize persistent data store
     local initialSerializableData = RentMotelManager.getSerializableRooms()
@@ -986,7 +788,7 @@ end)
 -- Main game loop - handles cron jobs, UI updates, proximity checks, and rent expiry
 registerForEvent("onUpdate", function(delta)
     Cron.Update(delta)
-    if RentMotelManager.activeInteractionRoomId or isHallwayDoorInteractionActive or dewdropCustomInteraction.active then
+    if RentMotelManager.activeInteractionRoomId or isHallwayDoorInteractionActive then
         interactionUI.update()
     end
     RentMotelManager.checkPlayerProximity()
@@ -1056,7 +858,7 @@ registerForEvent("onUpdate", function(delta)
                                 --print("[RentMotelMod] " .. roomId .. ": Overstay fee is zero or less.")
                             end
                         else
-                             --print("[RentMotelMod] " .. roomId .. ": Overstay fee already charged or no roomDef/rentCost.")
+                            --print("[RentMotelMod] " .. roomId .. ": Overstay fee already charged or no roomDef/rentCost.")
                         end
                         --print("[RentMotelMod] " .. roomId .. ": Player has exited after overstay. Locking door.")
                         LockDoor(roomId)

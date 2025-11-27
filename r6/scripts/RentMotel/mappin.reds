@@ -7,34 +7,17 @@ class MotelMappinSS extends ScriptableSystem {
     public func CreateMotelMappin() {
         // Sunset Motel Mappin Creation
         let sunsetMotelMappinPos: Vector4;
-        sunsetMotelMappinPos.X = 1662.2933;
-        sunsetMotelMappinPos.Y = -785.7644; 
-        sunsetMotelMappinPos.Z = 49.84044;   
+        sunsetMotelMappinPos.X = 1660.8585;
+        sunsetMotelMappinPos.Y = -785.79663; 
+        sunsetMotelMappinPos.Z = 50.84044;   
         sunsetMotelMappinPos.W = 1.0;
-
-        // Create custom mappin data for the motel
-        let sunsetMotelRoleData: ref<GameplayRoleMappinData> = new GameplayRoleMappinData();
-        sunsetMotelRoleData.m_range = 100.0;
-        sunsetMotelRoleData.m_mappinVisualState = EMappinVisualState.Default;
-        sunsetMotelRoleData.m_gameplayRole = EGameplayRole.ServicePoint;
-        sunsetMotelRoleData.m_showOnMiniMap = true;
-        sunsetMotelRoleData.m_visibleThroughWalls = false;
-        
-        // Add custom fields for our motel (localized)
-        sunsetMotelRoleData.m_customUsedMotel = true;
-        sunsetMotelRoleData.m_customNameMotel = GetLocalizedTextByKey(n"RentMotel-Title-Sunset");
-        sunsetMotelRoleData.m_customDescMotel = GetLocalizedTextByKey(n"RentMotel-Desc-Sunset");
-        sunsetMotelRoleData.m_customIconMotel = n"apartment";
-        sunsetMotelRoleData.m_customAtlasMotel = r"base\\gameplay\\gui\\common\\icons\\mappin_icons.inkatlas";
-        sunsetMotelRoleData.m_customTintMotel = new HDRColor(0.8, 0.6, 0.2, 1.0);
 
         let sunsetMotelMappinData: MappinData = new MappinData();
         sunsetMotelMappinData.mappinType = t"Mappins.DefaultStaticMappin";
         sunsetMotelMappinData.variant = gamedataMappinVariant.Zzz05_ApartmentToPurchaseVariant;
         sunsetMotelMappinData.active = true;
-        sunsetMotelMappinData.debugCaption = "Sunset Motel Room Mappin";
+        sunsetMotelMappinData.debugCaption = "RM_RentMotel|" + GetLocalizedTextByKey(n"RentMotel-Title-Sunset") + "|" + GetLocalizedTextByKey(n"RentMotel-Desc-Sunset");
         sunsetMotelMappinData.visibleThroughWalls = false;
-        sunsetMotelMappinData.scriptData = sunsetMotelRoleData;
 
         // Register the mappin and store the ID in the array
         let sunsetMotelID: NewMappinID = GameInstance.GetMappinSystem(GetGameInstance()).RegisterMappin(sunsetMotelMappinData, sunsetMotelMappinPos);
@@ -44,33 +27,17 @@ class MotelMappinSS extends ScriptableSystem {
 
         // Kabuki Motel Mappin Creation
         let kabukiMotelMappinPos: Vector4;
-        kabukiMotelMappinPos.X = -1248.2646;
-        kabukiMotelMappinPos.Y = 1982.6512;
-        kabukiMotelMappinPos.Z = 12.016251;
+        kabukiMotelMappinPos.X = -1249.1337;
+        kabukiMotelMappinPos.Y = 1981.7214;
+        kabukiMotelMappinPos.Z = 13.016251;
         kabukiMotelMappinPos.W = 1.0;
-
-        let kabukiMotelRoleData: ref<GameplayRoleMappinData> = new GameplayRoleMappinData();
-        kabukiMotelRoleData.m_range = 100.0;
-        kabukiMotelRoleData.m_mappinVisualState = EMappinVisualState.Default;
-        kabukiMotelRoleData.m_gameplayRole = EGameplayRole.ServicePoint;
-        kabukiMotelRoleData.m_showOnMiniMap = true;
-        kabukiMotelRoleData.m_visibleThroughWalls = false;
-
-        // Custom fields for the new mappin (localized)
-        kabukiMotelRoleData.m_customUsedMotel = true;
-        kabukiMotelRoleData.m_customNameMotel = GetLocalizedTextByKey(n"RentMotel-Title-Kabuki");
-        kabukiMotelRoleData.m_customDescMotel = GetLocalizedTextByKey(n"RentMotel-Desc-Kabuki");
-        kabukiMotelRoleData.m_customIconMotel = n"apartment";
-        kabukiMotelRoleData.m_customAtlasMotel = r"base\\gameplay\\gui\\common\\icons\\mappin_icons.inkatlas";
-        kabukiMotelRoleData.m_customTintMotel = new HDRColor(0.8, 0.6, 0.2, 1.0);
 
         let kabukiMotelMappinData: MappinData = new MappinData();
         kabukiMotelMappinData.mappinType = t"Mappins.DefaultStaticMappin";
         kabukiMotelMappinData.variant = gamedataMappinVariant.Zzz05_ApartmentToPurchaseVariant;
         kabukiMotelMappinData.active = true;
-        kabukiMotelMappinData.debugCaption = "Kabuki Motel Room Mappin";
+        kabukiMotelMappinData.debugCaption = "RM_RentMotel|" + GetLocalizedTextByKey(n"RentMotel-Title-Kabuki") + "|" + GetLocalizedTextByKey(n"RentMotel-Desc-Kabuki");
         kabukiMotelMappinData.visibleThroughWalls = false;
-        kabukiMotelMappinData.scriptData = kabukiMotelRoleData;
 
         let kabukiMotelID: NewMappinID = GameInstance.GetMappinSystem(GetGameInstance()).RegisterMappin(kabukiMotelMappinData, kabukiMotelMappinPos);
         ArrayPush(this.mappinIDs, kabukiMotelID);
@@ -79,75 +46,39 @@ class MotelMappinSS extends ScriptableSystem {
         
         // Dewdrop Inn Motel Mappin Creation
         let DewdropInnMotelMappinPos: Vector4;
-        DewdropInnMotelMappinPos.X = -563.39307;
-        DewdropInnMotelMappinPos.Y = -814.91583;
-        DewdropInnMotelMappinPos.Z = 8.199997;
+        DewdropInnMotelMappinPos.X = -563.10315;
+        DewdropInnMotelMappinPos.Y = -813.8557;
+        DewdropInnMotelMappinPos.Z = 9.199997;
         DewdropInnMotelMappinPos.W = 1.0;
-
-        let DewdropInnMotelRoleData: ref<GameplayRoleMappinData> = new GameplayRoleMappinData();
-        DewdropInnMotelRoleData.m_range = 100.0;
-        DewdropInnMotelRoleData.m_mappinVisualState = EMappinVisualState.Default;
-        DewdropInnMotelRoleData.m_gameplayRole = EGameplayRole.ServicePoint;
-        DewdropInnMotelRoleData.m_showOnMiniMap = true;
-        DewdropInnMotelRoleData.m_visibleThroughWalls = false;
-
-        // Custom fields for the new mappin (localized)
-        DewdropInnMotelRoleData.m_customUsedMotel = true;
-        DewdropInnMotelRoleData.m_customNameMotel = GetLocalizedTextByKey(n"RentMotel-Title-Dewdrop");
-        DewdropInnMotelRoleData.m_customDescMotel = GetLocalizedTextByKey(n"RentMotel-Desc-Dewdrop");
-        DewdropInnMotelRoleData.m_customIconMotel = n"apartment";
-        DewdropInnMotelRoleData.m_customAtlasMotel = r"base\\gameplay\\gui\\common\\icons\\mappin_icons.inkatlas";
-        DewdropInnMotelRoleData.m_customTintMotel = new HDRColor(0.8, 0.6, 0.2, 1.0);
 
         let DewdropInnMotelMappinData: MappinData = new MappinData();
         DewdropInnMotelMappinData.mappinType = t"Mappins.DefaultStaticMappin";
         DewdropInnMotelMappinData.variant = gamedataMappinVariant.Zzz05_ApartmentToPurchaseVariant;
         DewdropInnMotelMappinData.active = true;
-        DewdropInnMotelMappinData.debugCaption = "DewdropInn Motel Room Mappin";
+        DewdropInnMotelMappinData.debugCaption = "RM_RentMotel|" + GetLocalizedTextByKey(n"RentMotel-Title-Dewdrop") + "|" + GetLocalizedTextByKey(n"RentMotel-Desc-Dewdrop");
         DewdropInnMotelMappinData.visibleThroughWalls = false;
-        DewdropInnMotelMappinData.scriptData = DewdropInnMotelRoleData;
 
         let DewdropInnMotelID: NewMappinID = GameInstance.GetMappinSystem(GetGameInstance()).RegisterMappin(DewdropInnMotelMappinData, DewdropInnMotelMappinPos);
         ArrayPush(this.mappinIDs, DewdropInnMotelID);
 
         ////////////////////////////////////////////////////////////////////////////
 
-        // No-Tell Motel mappin (only after The Heist)
-        let qs: ref<QuestsSystem> = GameInstance.GetQuestsSystem(GetGameInstance());
-        if IsDefined(qs) && qs.GetFact(n"q005_done") == 1 {
-            let noTellPos: Vector4;
-            // TODO: fill with No-Tell world coords
-            noTellPos.X = -1127.5381;
-            noTellPos.Y = 1320.9652;
-            noTellPos.Z = 28.0;
-            noTellPos.W = 1.0;
+        // No-Tell Motel Mappin Creation
+        let noTellPos: Vector4;
+        noTellPos.X = -1137.5416;
+        noTellPos.Y = 1320.3446;
+        noTellPos.Z = 29.0;
+        noTellPos.W = 1.0;
 
-            let noTellRoleData: ref<GameplayRoleMappinData> = new GameplayRoleMappinData();
-            noTellRoleData.m_range = 100.0;
-            noTellRoleData.m_mappinVisualState = EMappinVisualState.Default;
-            noTellRoleData.m_gameplayRole = EGameplayRole.ServicePoint;
-            noTellRoleData.m_showOnMiniMap = true;
-            noTellRoleData.m_visibleThroughWalls = false;
+        let noTellData: MappinData = new MappinData();
+        noTellData.mappinType = t"Mappins.DefaultStaticMappin";
+        noTellData.variant = gamedataMappinVariant.Zzz05_ApartmentToPurchaseVariant;
+        noTellData.active = true;
+        noTellData.debugCaption = "RM_RentMotel|" + GetLocalizedTextByKey(n"RentMotel-Title-NoTell") + "|" + GetLocalizedTextByKey(n"RentMotel-Desc-NoTell");
+        noTellData.visibleThroughWalls = false;
 
-            // Custom fields (localized)
-            noTellRoleData.m_customUsedMotel = true;
-            noTellRoleData.m_customNameMotel = GetLocalizedTextByKey(n"RentMotel-Title-NoTell");
-            noTellRoleData.m_customDescMotel = GetLocalizedTextByKey(n"RentMotel-Desc-NoTell");
-            noTellRoleData.m_customIconMotel = n"apartment";
-            noTellRoleData.m_customAtlasMotel = r"base\\gameplay\\gui\\common\\icons\\mappin_icons.inkatlas";
-            noTellRoleData.m_customTintMotel = new HDRColor(0.8, 0.6, 0.2, 1.0);
-
-            let noTellData: MappinData = new MappinData();
-            noTellData.mappinType = t"Mappins.DefaultStaticMappin";
-            noTellData.variant = gamedataMappinVariant.Zzz05_ApartmentToPurchaseVariant;
-            noTellData.active = true;
-            noTellData.debugCaption = "No-Tell Motel Room Mappin";
-            noTellData.visibleThroughWalls = false;
-            noTellData.scriptData = noTellRoleData;
-
-            let noTellID: NewMappinID = GameInstance.GetMappinSystem(GetGameInstance()).RegisterMappin(noTellData, noTellPos);
-            ArrayPush(this.mappinIDs, noTellID);
-        }
+        let noTellID: NewMappinID = GameInstance.GetMappinSystem(GetGameInstance()).RegisterMappin(noTellData, noTellPos);
+        ArrayPush(this.mappinIDs, noTellID);
     }
 
     public func RemoveMotelMappin() {
@@ -161,41 +92,32 @@ class MotelMappinSS extends ScriptableSystem {
         ArrayClear(this.mappinIDs);
     }
 
-    public func SetCustomMapMarkerIcon(mappin: ref<IMappin>, imageWidget: inkImageRef) -> Void {
-        if IsDefined(mappin) {
-            let mappinData: ref<GameplayRoleMappinData> = mappin.GetScriptData() as GameplayRoleMappinData;
-            if IsDefined(mappinData) && mappinData.m_customUsedMotel {
-                // Set the atlas resource and texture part consistently
-                inkImageRef.SetAtlasResource(imageWidget, mappinData.m_customAtlasMotel);
-                inkImageRef.SetTexturePart(imageWidget, mappinData.m_customIconMotel);
-                inkWidgetRef.SetTintColor(imageWidget, mappinData.m_customTintMotel);
-            }
-        }
-    }
-
     public static func GetSS() -> ref<MotelMappinSS> {
         return GameInstance.GetScriptableSystemsContainer(GetGameInstance()).Get(n"RentMotel.MotelMappinSS") as MotelMappinSS;
     }
 }
 
-// Add custom fields to GameplayRoleMappinData for our motel
-@addField(GameplayRoleMappinData)
-public let m_customUsedMotel: Bool;
+// ---- shared: detect mappins via the debugCaption ----
+@addMethod(BaseMappinBaseController)
+protected final func __rmIsOurMotelPin() -> Bool {
+  let cap: String = this.GetMappin().GetDisplayName();
+  let parts: array<String> = StrSplit(cap, "|");
+  return ArraySize(parts) > 0 && Equals(parts[0], "RM_RentMotel");
+}
 
-@addField(GameplayRoleMappinData)
-public let m_customNameMotel: String;
+// ---- shared: apply the motel icon ----
+@addMethod(BaseMappinBaseController)
+protected final func __rmApplyMotelIcon(opt forMinimap: Bool) -> Void {
+  if !this.__rmIsOurMotelPin() { return; }
 
-@addField(GameplayRoleMappinData)
-public let m_customDescMotel: String;
+  inkImageRef.SetAtlasResource(this.iconWidget, r"base\\gameplay\\gui\\common\\icons\\mappin_icons.inkatlas");
+  inkImageRef.SetTexturePart(this.iconWidget, n"apartment");
 
-@addField(GameplayRoleMappinData)
-public let m_customIconMotel: CName;
-
-@addField(GameplayRoleMappinData)
-public let m_customAtlasMotel: ResRef;
-
-@addField(GameplayRoleMappinData)
-public let m_customTintMotel: HDRColor;
+  // Only scale for minimap
+  if forMinimap {
+    inkWidgetRef.SetScale(this.iconWidget, new Vector2(1.0, 1.0));
+  }
+}
 
 // Hook into player spawn to create the mappin
 @wrapMethod(PlayerPuppet)
@@ -218,60 +140,54 @@ protected cb func OnDetach() -> Bool {
     return wrappedMethod();
 }
 
-// Update mappin icons in minimap
+// ===== minimap pin =====
+@wrapMethod(MinimapPOIMappinController)
+protected final func UpdateIcon() -> Void {
+  wrappedMethod();
+  this.__rmApplyMotelIcon(true);     // minimap
+}
+
+// ===== minimap device controller (for POI pins) =====
 @wrapMethod(MinimapDeviceMappinController)
 protected func Update() -> Void {
-    wrappedMethod();
-    let ss: ref<MotelMappinSS> = MotelMappinSS.GetSS();
-    if IsDefined(ss) && IsDefined(this.m_mappin) {
-        ss.SetCustomMapMarkerIcon(this.m_mappin, this.iconWidget);
-    }
+  wrappedMethod();
+  this.__rmApplyMotelIcon(true);     // minimap
 }
 
-// Update mappin icons in world map
-@wrapMethod(BaseWorldMapMappinController)
+// ===== world *floating* pin (in the game world) =====
+@wrapMethod(QuestMappinController)
 protected func UpdateIcon() -> Void {
-    wrappedMethod();
-    let ss: ref<MotelMappinSS> = MotelMappinSS.GetSS();
-    if IsDefined(ss) && IsDefined(this.m_mappin) {
-        ss.SetCustomMapMarkerIcon(this.m_mappin, this.iconWidget);
-    }
+  wrappedMethod();
+  this.__rmApplyMotelIcon(false);    // world-space
 }
 
-// Update mappin icons in gameplay view
+// ===== gameplay controller (for tracked pins in world) =====
 @wrapMethod(GameplayMappinController)
 private func UpdateIcon() -> Void {
-    if IsDefined(this.m_mappin) {
-        let mappinData: ref<GameplayRoleMappinData> = this.m_mappin.GetScriptData() as GameplayRoleMappinData;
-        if IsDefined(mappinData) && mappinData.m_customUsedMotel {
-            inkWidgetRef.SetVisible(this.m_scanningDiamond, false);
-            
-            let ss: ref<MotelMappinSS> = MotelMappinSS.GetSS();
-            if IsDefined(ss) {
-                ss.SetCustomMapMarkerIcon(this.m_mappin, this.iconWidget);
-            }
-            
-            // Show/hide based on distance
-            let playerPos: Vector4 = GetPlayer(GetGameInstance()).GetWorldPosition();
-            let mappinPos: Vector4 = this.m_mappin.GetWorldPosition();
-            let distance: Float = Vector4.Distance(playerPos, mappinPos);
-            inkWidgetRef.SetVisible(this.iconWidget, distance < mappinData.m_range);
-            return;
-        }
-    }
-    wrappedMethod();
+  // Let the game handle the default behavior first
+  wrappedMethod();
+
+  // Then apply custom icon if it's our pin
+  if IsDefined(this.m_mappin) && this.__rmIsOurMotelPin() {
+    this.__rmApplyMotelIcon(false);
+  }
+}
+
+// ===== World Map screen =====
+@wrapMethod(BaseWorldMapMappinController)
+protected func UpdateIcon() -> Void {
+  wrappedMethod();
+  this.__rmApplyMotelIcon(false);    // world-map screen
 }
 
 // Update tooltip text for world map
 @wrapMethod(WorldMapTooltipController)
 public func SetData(const data: script_ref<WorldMapTooltipData>, menu: ref<WorldMapMenuGameController>) -> Void {
-    wrappedMethod(data, menu);
-    
-    if IsDefined(Deref(data).controller) && IsDefined(Deref(data).mappin) && IsDefined(menu.GetPlayer()) {
-        let mappinData: ref<GameplayRoleMappinData> = Deref(data).mappin.GetScriptData() as GameplayRoleMappinData;
-        if IsDefined(mappinData) && mappinData.m_customUsedMotel {
-            inkTextRef.SetText(this.m_titleText, mappinData.m_customNameMotel);
-            inkTextRef.SetText(this.m_descText, mappinData.m_customDescMotel);
-        }
-    }
+  wrappedMethod(data, menu);
+
+  let parts: array<String> = StrSplit(Deref(data).mappin.GetDisplayName(), "|");
+  if ArraySize(parts) >= 3 && Equals(parts[0], "RM_RentMotel") {
+    inkTextRef.SetText(this.m_titleText, parts[1]); // custom title
+    inkTextRef.SetText(this.m_descText,  parts[2]); // custom desc
+  }
 }

@@ -1,0 +1,335 @@
+streaming:
+  sectors:
+  # Sectors from removal editor
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 81
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 92
+      debugName: None
+    expectedNodes: 110
+    path: base\worlds\03_night_city\_compiled\default\ep1\exterior_-4_0_0_4.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 137
+      debugName: None
+    expectedNodes: 500
+    path: base\worlds\03_night_city\_compiled\default\ep1\exterior_-6_-8_0_2.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 21
+      debugName: None
+    expectedNodes: 50
+    path: base\worlds\03_night_city\_compiled\default\ep1\interior_-28_1_0_2.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 1010
+      debugName: None
+    expectedNodes: 1040
+    path: base\worlds\03_night_city\_compiled\default\exterior_-1_-1_0_4.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 1369
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1472
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1478
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1490
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1526
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1536
+      debugName: None
+    expectedNodes: 1597
+    path: base\worlds\03_night_city\_compiled\default\exterior_-1_0_0_4.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 929
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 933
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 937
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 979
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1031
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1032
+      debugName: None
+    expectedNodes: 1093
+    path: base\worlds\03_night_city\_compiled\default\exterior_-1_1_0_4.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 831
+      debugName: None
+    expectedNodes: 882
+    path: base\worlds\03_night_city\_compiled\default\exterior_-2_-2_0_4.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 1493
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1516
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1517
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1549
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1551
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1556
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1558
+      debugName: None
+    expectedNodes: 1639
+    path: base\worlds\03_night_city\_compiled\default\exterior_-2_0_0_4.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 1125
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1195
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1198
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1200
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1201
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1211
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1232
+      debugName: None
+    expectedNodes: 1359
+    path: base\worlds\03_night_city\_compiled\default\exterior_-2_1_0_4.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 1145
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1147
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1165
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1168
+      debugName: None
+    expectedNodes: 1511
+    path: base\worlds\03_night_city\_compiled\default\exterior_-2_2_0_3.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 411
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 413
+      debugName: None
+    expectedNodes: 432
+    path: base\worlds\03_night_city\_compiled\default\exterior_-3_0_0_4.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 240
+      debugName: None
+    expectedNodes: 249
+    path: base\worlds\03_night_city\_compiled\default\exterior_-3_1_0_4.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 1638
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1640
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1687
+      debugName: None
+    - type: worldInstancedOccluderNode
+      index: 1722
+      debugName: None
+    expectedNodes: 2043
+    path: base\worlds\03_night_city\_compiled\default\exterior_-3_2_0_3.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 426
+      debugName: None
+    expectedNodes: 427
+    path: base\worlds\03_night_city\_compiled\default\exterior_-3_2_0_4.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 2143
+      debugName: None
+    expectedNodes: 2925
+    path: base\worlds\03_night_city\_compiled\default\exterior_-5_5_0_2.streamingsector
+  - nodeDeletions:
+    - type: worldEntityProxyMeshNode
+      index: 880
+      debugName: None
+    expectedNodes: 3599
+    path: base\worlds\03_night_city\_compiled\default\exterior_-9_10_0_1.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 119
+      debugName: None
+    expectedNodes: 124
+    path: base\worlds\03_night_city\_compiled\default\exterior_0_0_-1_6.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 281
+      debugName: None
+    expectedNodes: 283
+    path: base\worlds\03_night_city\_compiled\default\exterior_0_0_0_4.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 301
+      debugName: None
+    expectedNodes: 302
+    path: base\worlds\03_night_city\_compiled\default\exterior_0_1_0_4.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 133
+      debugName: None
+    expectedNodes: 136
+    path: base\worlds\03_night_city\_compiled\default\exterior_0_2_0_4.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 193
+      debugName: None
+    expectedNodes: 204
+    path: base\worlds\03_night_city\_compiled\default\exterior_1_-1_0_4.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 104
+      debugName: None
+    expectedNodes: 105
+    path: base\worlds\03_night_city\_compiled\default\exterior_1_1_0_4.streamingsector
+  - nodeDeletions:
+    - type: worldInstancedOccluderNode
+      index: 129
+      debugName: None
+    expectedNodes: 132
+    path: base\worlds\03_night_city\_compiled\default\exterior_2_2_0_4.streamingsector
+  - nodeDeletions:
+    - type: worldStaticDecalNode
+      index: 48
+      debugName: d_dirt_f_170
+    - type: worldInstancedMeshNode
+      actorDeletions:
+      - 10
+      expectedActors: 11
+      index: 245
+      debugName: None
+    - type: worldCollisionNode
+      actorDeletions:
+      - 17
+      expectedActors: 33
+      index: 260
+      debugName: NormalCollisionNode_462
+    expectedNodes: 261
+    path: base\worlds\03_night_city\_compiled\default\interior_-18_20_0_1.streamingsector
+  
+  # Sectors from vs2077 mods
+  - nodeDeletions:
+    - nodeRef: $/03_night_city/#c_santo_domingo/arroyo/loc_sts_std_arr_01_prefabUSTVARI/loc_sts_std_arr_01_gameplay_prefabCVG3WTI/loc_sts_std_arr_01_devices_prefabZDUH4IA/decorative_single_door_007_prefabO7M3H5Y/{single_door}_prefabPPPD5FQ
+      type: worldEntityNode
+      index: 844
+      debugName: "{single_door}"
+      resource: base\gameplay\devices\doors\final\single_door_decorative.ent
+      orientation:
+        j: 0
+        r: 0.95167475938797
+        k: -0.30710795521736
+        i: 0
+      position:
+        y: -815.21923828125
+        z: 8.1999998092651
+        x: -560.69110107422
+    - position:
+        z: 9.9791851043701
+        x: -555.45385742188
+        y: -815.83325195313
+      debugName: "{tv_}6"
+      orientation:
+        r: -0.86911630630493
+        j: 0.19210302829742
+        i: -0.098367467522621
+        k: -0.44503623247147
+      resource: base\gameplay\devices\home_appliances\tv_sets\tv_6.ent
+      nodeRef: $/03_night_city/#c_santo_domingo/arroyo/loc_sts_std_arr_01_prefabUSTVARI/loc_sts_std_arr_01_gameplay_prefabCVG3WTI/loc_sts_std_arr_01_devices_prefabZDUH4IA/tv_6_005_prefabKWE4NPQ/{tv_}6_prefabJ4GBRUQ
+      index: 782
+      type: worldEntityNode
+    path: base\worlds\03_night_city\_compiled\default\exterior_-9_-13_0_0.streamingsector
+    expectedNodes: 1275
+  - path: base\worlds\03_night_city\_compiled\default\exterior_-5_-7_0_1.streamingsector
+    nodeDeletions:
+    - nodeRef: $/03_night_city/#c_santo_domingo/arroyo/loc_sts_std_arr_01_prefabUSTVARI/loc_sts_std_arr_01_gameplay_prefabCVG3WTI/loc_sts_std_arr_01_devices_prefabZDUH4IA/decorative_single_door_007_prefabO7M3H5Y/{single_door}_prefabPPPD5FQ/_entityProxyMesh
+      index: 280
+      debugName: "87\\\u0001"
+      resource: base\gameplay\devices\doors\single_door\appearances\decorative\_proxyhelper\glass_mproxy.mesh
+      type: worldEntityProxyMeshNode
+      orientation:
+        r: 0.95167475938797
+        i: 0
+        j: 0
+        k: -0.30710795521736
+      position:
+        y: -815.21923828125
+        z: 8.1999998092651
+        x: -560.69110107422
+    expectedNodes: 1463
+  - nodeDeletions:
+    - position:
+        x: -1135.9141845703
+        y: 1319.2390136719
+        z: 28
+      orientation:
+        r: -0.99904823303223
+        k: 0.043619271367788
+        i: 0
+        j: 0
+      type: worldEntityNode
+      resource: base\gameplay\devices\doors\final\single_door_decorative.ent
+      debugName: "{single_door}"
+      index: 861
+      nodeRef: $/03_night_city/c_watson/kabuki/#loc_q005_notell_motel/loc_q005_notell_motel_gameplay_prefabTJS5RZQ/#loc_q005_notell_motel_devices/{decorative_single_door_}206_prefab76NF7IQ/{single_door}_prefabPPPD5FQ
+    expectedNodes: 1827
+    path: base\worlds\03_night_city\_compiled\default\exterior_-18_20_0_0.streamingsector
+  
+  # TV removal from Kabuki Motel
+  - path: base\worlds\03_night_city\_compiled\default\exterior_-20_30_0_0.streamingsector
+    expectedNodes: 7311
+    nodeDeletions:
+    - type: worldEntityNode
+      resource: base\gameplay\devices\home_appliances\tv_sets\tv_5.ent
+      debugName: "{tv_}5"
+      orientation:
+        r: -0.30294147133827
+        k: -0.93705540895462
+        i: -0.17199373245239
+        j: 0.023913647979498
+      index: 4296
+      position:
+        x: -1248.0703125
+        y: 1979.8796386719
+        z: 14.387367248535
+      nodeRef: $/03_night_city/c_watson/kabuki/loc_sts_wat_kab_08_cop_hotel_prefab4HVPLOY/loc_sts_wat_kab_08_cop_hotel_gameplay_prefabOSKBZ2Q/loc_sts_wat_kab_08_cop_hotel_devices_prefabLBMYDPI/tv_5_prefabXZRG2SQ/{tv_}5_prefabV62RCKI
