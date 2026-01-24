@@ -1,6 +1,13 @@
 local Cron = require("modules/Cron")
 local GameSession = require("modules/GameSession")
 local interactionUI = require("modules/interactionUI")
+local Config = require("modules/config")
+
+-- Load user settings (prices) from settings.json
+Config.Load()
+
+-- Native Settings reference (set in onInit if available)
+local nativeSettings = nil
 
 -- Hallway Door Configuration
 -- This is for a generic, non-rentable door that the player can open and close.
@@ -60,10 +67,10 @@ local ROOM_DEFINITIONS = {
         locKeyRoomName = "RentMotel-Room-Sunset",
         doorHash = 10025113471746604205ULL, -- The unique hash for the room's main door entity
         paymentTerminalHash = 2454332936290437600ULL, -- Payment terminal hash entity
-        rentCost = 450,
+        rentCost = Config.prices.sunset_motel_room_102 or 450,
         -- The 3D boundaries of the room's interior
         roomBoundsMin = { x = 1657.0, y = -796.3, z = 49.5 },
-        roomBoundsMax = { x = 1666.6, y = -785.2, z = 52.9 }
+        roomBoundsMax = { x = 1666.6, y = -786.0, z = 52.9 }
     },
     {
         roomId = "kabuki_motel_room_203",
@@ -71,7 +78,7 @@ local ROOM_DEFINITIONS = {
         doorHash = 1867170616709106376ULL,
         backDoorHash = 14602689378209513153ULL,
         paymentTerminalHash = 8068600755530504000ULL,
-        rentCost = 700,
+        rentCost = Config.prices.kabuki_motel_room_203 or 700,
         roomBoundsMin = { x = -1248.5, y = 1969.0, z = 11.7 },
         roomBoundsMax = { x = -1238.0, y = 1982.3, z = 14.8 }
     },
@@ -80,7 +87,7 @@ local ROOM_DEFINITIONS = {
         locKeyRoomName = "RentMotel-Room-Dewdrop",
         doorHash = 7178334462812897738ULL,
         paymentTerminalHash = 4029866856386479600ULL,
-        rentCost = 1000,
+        rentCost = Config.prices.DewdropInn_motel_room_106 or 1000,
         roomBoundsMin = { x = -562.80, y = -821.5, z = 8.0 },
         roomBoundsMax = { x = -554.1, y = -812.1, z = 11.2 },
     },
@@ -89,7 +96,7 @@ local ROOM_DEFINITIONS = {
         locKeyRoomName = "RentMotel-Room-NoTell",
         doorHash = 7494599788290938000ULL,
         paymentTerminalHash = 7352168567788151353ULL,
-        rentCost = 700,
+        rentCost = Config.prices.NoTell_motel_room_206 or 700,
         roomBoundsMin = { x = -1139.0, y = 1307.185,  z = 27.9 },
         roomBoundsMax = { x = -1127.6685, y = 1319.1003, z = 31.0 }
     }
@@ -404,8 +411,10 @@ function SyncDoorStateWithSavedState(roomId)
 end
 
 -- Helper function to generate rental choices based on player funds
-function createRentalChoices(rentCost1Day, rentCost7Days, playerMoney)
+function createRentalChoices(rentCost1Day, rentCostExtended, playerMoney)
     local choices = {}
+    local extendedDays = Config.extendedRentalDays
+    
     -- Option 1: 24 hours
     if playerMoney >= rentCost1Day then
         table.insert(choices, interactionUI.createChoice(L("RentMotel-Choice-24h", { price = rentCost1Day }), nil, gameinteractionsChoiceType.QuestImportant))
@@ -413,11 +422,11 @@ function createRentalChoices(rentCost1Day, rentCost7Days, playerMoney)
         table.insert(choices, interactionUI.createChoice(L("RentMotel-Choice-24h-NoMoney", { price = rentCost1Day }), nil, gameinteractionsChoiceType.Disabled))
     end
 
-    -- Option 2: 7 days
-    if playerMoney >= rentCost7Days then
-        table.insert(choices, interactionUI.createChoice(L("RentMotel-Choice-7d", { price = rentCost7Days }), nil, gameinteractionsChoiceType.QuestImportant))
+    -- Option 2: Extended days (configurable)
+    if playerMoney >= rentCostExtended then
+        table.insert(choices, interactionUI.createChoice(L("RentMotel-Choice-7d", { price = rentCostExtended, days = extendedDays }), nil, gameinteractionsChoiceType.QuestImportant))
     else
-        table.insert(choices, interactionUI.createChoice(L("RentMotel-Choice-7d-NoMoney", { price = rentCost7Days }), nil, gameinteractionsChoiceType.Disabled))
+        table.insert(choices, interactionUI.createChoice(L("RentMotel-Choice-7d-NoMoney", { price = rentCostExtended, days = extendedDays }), nil, gameinteractionsChoiceType.Disabled))
     end
     return choices
 end
@@ -437,10 +446,10 @@ function RentMotelManager.createInteractionHub(roomId)
     local playerMoney = ts:GetItemQuantity(player, MarketSystem.Money())
 
     local rentCost1Day = room.config.rentCost
-    local rentCost7Days = math.floor(rentCost1Day * 7 * 0.9) -- 10% discount per day for 7 days
+    local rentCostExtended = math.floor(rentCost1Day * Config.extendedRentalDays * 0.9) -- 10% discount for extended rental
 
     if room.config.isDoorLocked then
-        choices = createRentalChoices(rentCost1Day, rentCost7Days, playerMoney)
+        choices = createRentalChoices(rentCost1Day, rentCostExtended, playerMoney)
     end
 
     local hubTitle = L(room.locKeyRoomName)
@@ -464,7 +473,7 @@ function RentMotelManager.setupInteractionCallbacks(roomId)
     local playerMoney = ts:GetItemQuantity(player, MarketSystem.Money())
 
     local rentCost1Day = room.config.rentCost
-    local rentCost7Days = math.floor(rentCost1Day * 7 * 0.9)
+    local rentCostExtended = math.floor(rentCost1Day * Config.extendedRentalDays * 0.9)
 
     if room.config.isDoorLocked then
         -- Callback for 24-hour rental (Choice 1)
@@ -474,10 +483,10 @@ function RentMotelManager.setupInteractionCallbacks(roomId)
             end)
         end
 
-        -- Callback for 7-day rental (Choice 2)
-        if playerMoney >= rentCost7Days then
+        -- Callback for extended rental (Choice 2)
+        if playerMoney >= rentCostExtended then
             interactionUI.registerChoiceCallback(2, function()
-                UnlockDoor(roomId, 7 * 24, rentCost7Days) -- durationInHours = 168, costToCharge = rentCost7Days
+                UnlockDoor(roomId, Config.extendedRentalDays * 24, rentCostExtended) -- durationInHours = extendedDays * 24, costToCharge = rentCostExtended
             end)
         end
     end
@@ -775,6 +784,70 @@ registerForEvent("onInit", function()
             RentMotelManager.serializableForPersistence[k] = v
         end
     end)
+
+    -- Native Settings integration (optional dependency)
+    nativeSettings = GetMod("nativeSettings")
+    if nativeSettings then
+        -- Add mod tab
+        nativeSettings.addTab("/RentMotel", "Rent Motel")
+        
+        -- Add prices subcategory
+        nativeSettings.addSubcategory("/RentMotel/Prices", "Room Prices (€$)")
+        
+        -- Sunset Motel Room 102 price slider
+        nativeSettings.addRangeInt("/RentMotel/Prices", "Sunset Motel Room 102", "Default: 450€$", 10, 30000, 10, 
+            Config.prices.sunset_motel_room_102 or 450, 450, function(value)
+                Config.prices.sunset_motel_room_102 = value
+                Config.Save()
+                -- Update runtime price if room is initialized
+                if RentMotelManager.rooms["sunset_motel_room_102"] then
+                    RentMotelManager.rooms["sunset_motel_room_102"].config.rentCost = value
+                end
+            end)
+        
+        -- Kabuki Motel Room 203 price slider
+        nativeSettings.addRangeInt("/RentMotel/Prices", "Kabuki Motel Room 203", "Default: 700€$", 10, 30000, 10, 
+            Config.prices.kabuki_motel_room_203 or 700, 700, function(value)
+                Config.prices.kabuki_motel_room_203 = value
+                Config.Save()
+                -- Update runtime price if room is initialized
+                if RentMotelManager.rooms["kabuki_motel_room_203"] then
+                    RentMotelManager.rooms["kabuki_motel_room_203"].config.rentCost = value
+                end
+            end)
+        
+        -- Dewdrop Inn Room 106 price slider
+        nativeSettings.addRangeInt("/RentMotel/Prices", "Dewdrop Inn Room 106", "Default: 1000€$", 10, 30000, 10, 
+            Config.prices.DewdropInn_motel_room_106 or 1000, 1000, function(value)
+                Config.prices.DewdropInn_motel_room_106 = value
+                Config.Save()
+                -- Update runtime price if room is initialized
+                if RentMotelManager.rooms["DewdropInn_motel_room_106"] then
+                    RentMotelManager.rooms["DewdropInn_motel_room_106"].config.rentCost = value
+                end
+            end)
+        
+        -- No-Tell Motel Room 206 price slider
+        nativeSettings.addRangeInt("/RentMotel/Prices", "No-Tell Motel Room 206", "Default: 700€$", 10, 30000, 10, 
+            Config.prices.NoTell_motel_room_206 or 700, 700, function(value)
+                Config.prices.NoTell_motel_room_206 = value
+                Config.Save()
+                -- Update runtime price if room is initialized
+                if RentMotelManager.rooms["NoTell_motel_room_206"] then
+                    RentMotelManager.rooms["NoTell_motel_room_206"].config.rentCost = value
+                end
+            end)
+        
+        -- Add rental options subcategory
+        nativeSettings.addSubcategory("/RentMotel/RentalOptions", "Rental Options")
+        
+        -- Extended rental duration slider
+        nativeSettings.addRangeInt("/RentMotel/RentalOptions", "Extended Rental Duration (Days)", "Set the number of days for extended rental option. Default: 7 days. Price includes 10% discount.", 2, 30, 1, 
+            Config.extendedRentalDays or 7, 7, function(value)
+                Config.extendedRentalDays = value
+                Config.Save()
+            end)
+    end
 end)
 
 -- Final cleanup on shutdown - saves data and hides UI
