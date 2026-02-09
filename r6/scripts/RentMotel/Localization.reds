@@ -55,6 +55,8 @@ public class English extends ModLocalizationPackage {
     this.Text("RentMotel-Choice-24h-NoMoney", "24h: Not enough money ({price}€$)");
     this.Text("RentMotel-Choice-7d", "Rent for 7 days - {price}€$ (10% off daily)");
     this.Text("RentMotel-Choice-7d-NoMoney", "7d: Not enough money ({price}€$)");
+    this.Text("RentMotel-Choice-Permanent", "Buy permanently - {price}€$");
+    this.Text("RentMotel-Choice-Permanent-NoMoney", "Permanent: Not enough money ({price}€$)");
   }
 
   protected func DefineSubtitles() -> Void {
@@ -92,6 +94,8 @@ public class Russian extends ModLocalizationPackage {
     this.Text("RentMotel-Choice-24h-NoMoney", "24 ч: Недостаточно денег ({price}€$)");
     this.Text("RentMotel-Choice-7d", "Арендовать на 7 дней - {price}€$ (скидка 10%)");
     this.Text("RentMotel-Choice-7d-NoMoney", "7 дн: Недостаточно денег ({price}€$)");
+    this.Text("RentMotel-Choice-Permanent", "Купить навсегда - {price}€$");
+    this.Text("RentMotel-Choice-Permanent-NoMoney", "Навсегда: Недостаточно денег ({price}€$)");
   }
 
   protected func DefineSubtitles() -> Void {
@@ -129,6 +133,8 @@ public class French extends ModLocalizationPackage {
     this.Text("RentMotel-Choice-24h-NoMoney", "24h: Pas assez d'argent ({price}€$)");
     this.Text("RentMotel-Choice-7d", "Louer pour 7 jours - {price}€$ (10% de réduction)");
     this.Text("RentMotel-Choice-7d-NoMoney", "7j: Pas assez d'argent ({price}€$)");
+    this.Text("RentMotel-Choice-Permanent", "Acheter définitivement - {price}€$");
+    this.Text("RentMotel-Choice-Permanent-NoMoney", "Permanent: Pas assez d'argent ({price}€$)");
   }
 
   protected func DefineSubtitles() -> Void {
@@ -166,6 +172,8 @@ public class BrazilianPortuguese extends ModLocalizationPackage {
     this.Text("RentMotel-Choice-24h-NoMoney", "24h: Dinheiro insuficiente ({price}€$)");
     this.Text("RentMotel-Choice-7d", "Aluguel por 7 dias - {price}€$ (10% de desconto diariamente)");
     this.Text("RentMotel-Choice-7d-NoMoney", "7d: Dinheiro insuficiente ({price}€$)");
+    this.Text("RentMotel-Choice-Permanent", "Comprar permanentemente - {price}€$");
+    this.Text("RentMotel-Choice-Permanent-NoMoney", "Permanente: Dinheiro insuficiente ({price}€$)");
   }
 
   protected func DefineSubtitles() -> Void {
@@ -203,6 +211,8 @@ public class Spanish extends ModLocalizationPackage {
     this.Text("RentMotel-Choice-24h-NoMoney", "24h: No hay suficiente dinero ({price}€$)");
     this.Text("RentMotel-Choice-7d", "Alquilar por 7 días - {price}€$ (10% de descuento diario)");
     this.Text("RentMotel-Choice-7d-NoMoney", "7d: No hay suficiente dinero ({price}€$)");
+    this.Text("RentMotel-Choice-Permanent", "Comprar permanentemente - {price}€$");
+    this.Text("RentMotel-Choice-Permanent-NoMoney", "Permanente: No hay suficiente dinero ({price}€$)");
   }
 
   protected func DefineSubtitles() -> Void {
@@ -240,6 +250,8 @@ public class TraditionalChinese extends ModLocalizationPackage {
     this.Text("RentMotel-Choice-24h-NoMoney", "24小時: 沒有足夠的金錢 ({price}€$)");
     this.Text("RentMotel-Choice-7d", "租用7小時 - {price}€$ (每天10%折扣)");
     this.Text("RentMotel-Choice-7d-NoMoney", "7小時: 沒有足夠的金錢 ({price}€$)");
+    this.Text("RentMotel-Choice-Permanent", "永久購買 - {price}€$");
+    this.Text("RentMotel-Choice-Permanent-NoMoney", "永久: 沒有足夠的金錢 ({price}€$)");
   }
 
   protected func DefineSubtitles() -> Void {
@@ -277,6 +289,8 @@ public class SimplifiedChinese extends ModLocalizationPackage {
     this.Text("RentMotel-Choice-24h-NoMoney", "24小时：资金不足 ({price}€$)");
     this.Text("RentMotel-Choice-7d", "租用7天 - {price}€$ (每日享受10%折扣)");
     this.Text("RentMotel-Choice-7d-NoMoney", "7天：资金不足 ({price}€$)");
+    this.Text("RentMotel-Choice-Permanent", "永久购买 - {price}€$");
+    this.Text("RentMotel-Choice-Permanent-NoMoney", "永久：资金不足 ({price}€$)");
   }
    
    protected func DefineSubtitles() -> Void {
@@ -314,6 +328,8 @@ public class Japanese extends ModLocalizationPackage {
     this.Text("RentMotel-Choice-24h-NoMoney", "24h: お金が足りません ({price}€$)");
     this.Text("RentMotel-Choice-7d", "7日間レンタル - {price}€$ (毎日10%オフ)");
     this.Text("RentMotel-Choice-7d-NoMoney", "7d: お金が足りません ({price}€$)");
+    this.Text("RentMotel-Choice-Permanent", "永久購入 - {price}€$");
+    this.Text("RentMotel-Choice-Permanent-NoMoney", "永久: お金が足りません ({price}€$)");
   }
  
   protected func DefineSubtitles() -> Void {
@@ -351,6 +367,8 @@ public class Italian extends ModLocalizationPackage {
     this.Text("RentMotel-Choice-24h-NoMoney", "24 ore: Non hai abbastanza soldi ({price}€$)");
     this.Text("RentMotel-Choice-7d", "Affittabile per 7 giorni - {price}€$ (10% off daily)");
     this.Text("RentMotel-Choice-7d-NoMoney", "7 giorni: non hai abbastanza soldi ({price}€$)");
+    this.Text("RentMotel-Choice-Permanent", "Acquista permanentemente - {price}€$");
+    this.Text("RentMotel-Choice-Permanent-NoMoney", "Permanente: Non hai abbastanza soldi ({price}€$)");
   }
  
   protected func DefineSubtitles() -> Void {
@@ -388,6 +406,8 @@ public class Korean extends ModLocalizationPackage {
     this.Text("RentMotel-Choice-24h-NoMoney", "24시간: 에디 부족 ({price}€$)");
     this.Text("RentMotel-Choice-7d", "7일 대여 - {price}€$ (일일 요금 10% 할인)");
     this.Text("RentMotel-Choice-7d-NoMoney", "7일: 에디 부족 ({price}€$)");
+    this.Text("RentMotel-Choice-Permanent", "영구 구매 - {price}€$");
+    this.Text("RentMotel-Choice-Permanent-NoMoney", "영구: 에디 부족 ({price}€$)");
   }
 
   protected func DefineSubtitles() -> Void {
@@ -425,6 +445,8 @@ public class German extends ModLocalizationPackage {
     this.Text("RentMotel-Choice-24h-NoMoney", "24 Stunden: Nicht genug Geld ({price}€$)");
     this.Text("RentMotel-Choice-7d", "Für 7 Tage mieten - {price}€$ (10% Rabatt pro Tag)");
     this.Text("RentMotel-Choice-7d-NoMoney", "7 Tage: Nicht genug Geld ({price}€$)");
+    this.Text("RentMotel-Choice-Permanent", "Dauerhaft kaufen - {price}€$");
+    this.Text("RentMotel-Choice-Permanent-NoMoney", "Dauerhaft: Nicht genug Geld ({price}€$)");
   }
 
   protected func DefineSubtitles() -> Void {

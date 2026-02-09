@@ -102,6 +102,18 @@ local ROOM_DEFINITIONS = {
     }
 }
 
+-- Pre-computed lookup table for O(1) room definition access
+local ROOM_DEFINITIONS_BY_ID = {}
+for _, roomDef in ipairs(ROOM_DEFINITIONS) do
+    ROOM_DEFINITIONS_BY_ID[roomDef.roomId] = roomDef
+end
+
+-- Throttle timers for performance
+local proximityCheckInterval = 0.2 -- Check proximity every 200ms 
+local proximityCheckTimer = 0
+local expiryCheckInterval = 1.0 -- Check rent expiry every 1 second
+local expiryCheckTimer = 0
+
 -- Main table for managing the state of rentable motel rooms
 RentMotelManager = {
     ready = false, -- Becomes true when a game session is active
@@ -196,14 +208,9 @@ function RentMotelManager.getSerializableRooms()
     return serializableRooms
 end
 
--- Helper function to get room definition by ID
+-- Helper function to get room definition by ID (O(1) lookup using pre-computed table)
 local function getRoomDefinitionById(roomId)
-    for _, roomDef in ipairs(ROOM_DEFINITIONS) do
-        if roomDef.roomId == roomId then
-            return roomDef
-        end
-    end
-    return nil
+    return ROOM_DEFINITIONS_BY_ID[roomId]
 end
 
 -- Restores the state of rooms from previously serialized data.
@@ -411,9 +418,10 @@ function SyncDoorStateWithSavedState(roomId)
 end
 
 -- Helper function to generate rental choices based on player funds
-function createRentalChoices(rentCost1Day, rentCostExtended, playerMoney)
+function createRentalChoices(roomId, rentCost1Day, rentCostExtended, playerMoney)
     local choices = {}
     local extendedDays = Config.extendedRentalDays
+    local isPermanentMode = Config.permanentRentingEnabled
     
     -- Option 1: 24 hours
     if playerMoney >= rentCost1Day then
@@ -422,11 +430,21 @@ function createRentalChoices(rentCost1Day, rentCostExtended, playerMoney)
         table.insert(choices, interactionUI.createChoice(L("RentMotel-Choice-24h-NoMoney", { price = rentCost1Day }), nil, gameinteractionsChoiceType.Disabled))
     end
 
-    -- Option 2: Extended days (configurable)
+    -- Option 2: Extended days (always shown)
     if playerMoney >= rentCostExtended then
         table.insert(choices, interactionUI.createChoice(L("RentMotel-Choice-7d", { price = rentCostExtended, days = extendedDays }), nil, gameinteractionsChoiceType.QuestImportant))
     else
         table.insert(choices, interactionUI.createChoice(L("RentMotel-Choice-7d-NoMoney", { price = rentCostExtended, days = extendedDays }), nil, gameinteractionsChoiceType.Disabled))
+    end
+
+    -- Option 3: Permanent (only when enabled)
+    if isPermanentMode then
+        local permanentCost = Config.permanentPrices[roomId] or rentCostExtended
+        if playerMoney >= permanentCost then
+            table.insert(choices, interactionUI.createChoice(L("RentMotel-Choice-Permanent", { price = permanentCost }), nil, gameinteractionsChoiceType.QuestImportant))
+        else
+            table.insert(choices, interactionUI.createChoice(L("RentMotel-Choice-Permanent-NoMoney", { price = permanentCost }), nil, gameinteractionsChoiceType.Disabled))
+        end
     end
     return choices
 end
@@ -449,7 +467,7 @@ function RentMotelManager.createInteractionHub(roomId)
     local rentCostExtended = math.floor(rentCost1Day * Config.extendedRentalDays * 0.9) -- 10% discount for extended rental
 
     if room.config.isDoorLocked then
-        choices = createRentalChoices(rentCost1Day, rentCostExtended, playerMoney)
+        choices = createRentalChoices(roomId, rentCost1Day, rentCostExtended, playerMoney)
     end
 
     local hubTitle = L(room.locKeyRoomName)
@@ -474,6 +492,8 @@ function RentMotelManager.setupInteractionCallbacks(roomId)
 
     local rentCost1Day = room.config.rentCost
     local rentCostExtended = math.floor(rentCost1Day * Config.extendedRentalDays * 0.9)
+    local isPermanentMode = Config.permanentRentingEnabled
+    local permanentCost = Config.permanentPrices[roomId] or rentCostExtended
 
     if room.config.isDoorLocked then
         -- Callback for 24-hour rental (Choice 1)
@@ -488,6 +508,15 @@ function RentMotelManager.setupInteractionCallbacks(roomId)
             interactionUI.registerChoiceCallback(2, function()
                 UnlockDoor(roomId, Config.extendedRentalDays * 24, rentCostExtended) -- durationInHours = extendedDays * 24, costToCharge = rentCostExtended
             end)
+        end
+
+        -- Callback for permanent rental (Choice 3) - only when enabled
+        if isPermanentMode then
+            if playerMoney >= permanentCost then
+                interactionUI.registerChoiceCallback(3, function()
+                    UnlockDoor(roomId, 999999 * 24, permanentCost) -- durationInHours = 999999 days, costToCharge = permanentCost
+                end)
+            end
         end
     end
 end
@@ -615,72 +644,72 @@ function RentMotelManager.checkPlayerProximity()
     if not player then return end
     
     local playerPos = player:GetWorldPosition()
-    local activeProximityTarget = { type = nil, id = nil } -- Priority: Room Terminal > Hallway
-
-    -- Check if player is inside ANY room boundaries
+    local activeProximityTargetType = nil
+    local activeProximityTargetId = nil
     local isPlayerInsideAnyRoom = false
+
+    -- Single optimized loop for all room checks
     for roomId, room in pairs(RentMotelManager.rooms) do
-        local roomDef = getRoomDefinitionById(roomId)
-        if roomDef and roomDef.roomBoundsMin and roomDef.roomBoundsMax then
-            if IsPlayerPhysicallyInsideRoom(playerPos, roomDef.roomBoundsMin, roomDef.roomBoundsMax) then
-                isPlayerInsideAnyRoom = true
-                break
+        local roomDef = ROOM_DEFINITIONS_BY_ID[roomId] -- Direct lookup instead of function call
+        
+        -- Sync door state on first spawn (always check this)
+        if not room.doorSynced then
+            local door = Game.FindEntityByID(room.doorID)
+            if door then
+                SyncDoorStateWithSavedState(roomId)
+                room.doorSynced = true
             end
         end
-    end
-
-    -- 1. Check for payment terminal proximity (highest priority for room interactions)
-    for roomId, room in pairs(RentMotelManager.rooms) do
-        -- Sync door state on first spawn
-        local door = Game.FindEntityByID(room.doorID)
-        if door and not room.doorSynced then
-            SyncDoorStateWithSavedState(roomId)
-            room.doorSynced = true
+        
+        -- Check if player is inside this room's boundaries
+        if not isPlayerInsideAnyRoom and roomDef and roomDef.roomBoundsMin and roomDef.roomBoundsMax then
+            if IsPlayerPhysicallyInsideRoom(playerPos, roomDef.roomBoundsMin, roomDef.roomBoundsMax) then
+                isPlayerInsideAnyRoom = true
+            end
         end
         
-        -- Check payment terminal proximity if it exists (only if player is NOT inside any room)
-        if not isPlayerInsideAnyRoom and room.paymentTerminalID then
+        -- Check payment terminal proximity (only if not inside any room and no target found yet)
+        if not isPlayerInsideAnyRoom and not activeProximityTargetType and room.paymentTerminalID then
             local terminal = Game.FindEntityByID(room.paymentTerminalID)
             if terminal then
                 local termPos = terminal:GetWorldPosition()
-                local distanceSquared = (playerPos.x - termPos.x)^2 + (playerPos.y - termPos.y)^2 + (playerPos.z - termPos.z)^2
-                
-                if distanceSquared < 4.0 then -- Within 2 meters
-                    activeProximityTarget = { type = "room", id = roomId }
-                    break -- Found a terminal, no need to check others
+                local dx, dy, dz = playerPos.x - termPos.x, playerPos.y - termPos.y, playerPos.z - termPos.z
+                if dx*dx + dy*dy + dz*dz < 4.0 then -- Within 2 meters
+                    activeProximityTargetType = "room"
+                    activeProximityTargetId = roomId
                 end
             end
         end
     end
 
-    -- 2. If no terminal is in range, check for the hallway door (only if player is NOT inside any room)
-    if not isPlayerInsideAnyRoom and not activeProximityTarget.type and hallwayDoorEntityID then
+    -- Check for the hallway door (only if player is NOT inside any room and no target found)
+    if not isPlayerInsideAnyRoom and not activeProximityTargetType and hallwayDoorEntityID then
         local hallwayDoorEntity = Game.FindEntityByID(hallwayDoorEntityID)
         if hallwayDoorEntity then
             local hallwayDoorPos = hallwayDoorEntity:GetWorldPosition()
-            local distanceSquared_hall = (playerPos.x - hallwayDoorPos.x)^2 + (playerPos.y - hallwayDoorPos.y)^2 + (playerPos.z - hallwayDoorPos.z)^2
-            if distanceSquared_hall < 4.0 then -- 2.0 squared
-                activeProximityTarget = { type = "hallway" }
+            local dx, dy, dz = playerPos.x - hallwayDoorPos.x, playerPos.y - hallwayDoorPos.y, playerPos.z - hallwayDoorPos.z
+            if dx*dx + dy*dy + dz*dz < 4.0 then -- 2.0 squared
+                activeProximityTargetType = "hallway"
             end
         end
     end
 
-    -- 3. Now, manage the active interactions based on the single target found
+    -- Manage the active interactions based on the single target found
     local roomInteractionIsActive = RentMotelManager.activeInteractionRoomId ~= nil
     local hallwayIsActive = isHallwayDoorInteractionActive
 
     -- Hide interactions that should NOT be active
-    if roomInteractionIsActive and (activeProximityTarget.type ~= "room" or activeProximityTarget.id ~= RentMotelManager.activeInteractionRoomId) then
+    if roomInteractionIsActive and (activeProximityTargetType ~= "room" or activeProximityTargetId ~= RentMotelManager.activeInteractionRoomId) then
         RentMotelManager.hideInteraction(RentMotelManager.activeInteractionRoomId)
     end
-    if hallwayIsActive and activeProximityTarget.type ~= "hallway" then
+    if hallwayIsActive and activeProximityTargetType ~= "hallway" then
         HideHallwayDoorInteraction()
     end
 
     -- Show the one interaction that SHOULD be active
-    if activeProximityTarget.type == "room" and not roomInteractionIsActive then
-        RentMotelManager.showInteraction(activeProximityTarget.id)
-    elseif activeProximityTarget.type == "hallway" and not hallwayIsActive then
+    if activeProximityTargetType == "room" and not roomInteractionIsActive then
+        RentMotelManager.showInteraction(activeProximityTargetId)
+    elseif activeProximityTargetType == "hallway" and not hallwayIsActive then
         ShowHallwayDoorInteraction()
     end
 end
@@ -789,7 +818,7 @@ registerForEvent("onInit", function()
     nativeSettings = GetMod("nativeSettings")
     if nativeSettings then
         -- Add mod tab
-        nativeSettings.addTab("/RentMotel", "Rent Motel")
+        nativeSettings.addTab("/RentMotel", "Rent A Motel")
         
         -- Add prices subcategory
         nativeSettings.addSubcategory("/RentMotel/Prices", "Room Prices (€$)")
@@ -847,6 +876,41 @@ registerForEvent("onInit", function()
                 Config.extendedRentalDays = value
                 Config.Save()
             end)
+        
+        -- Add permanent renting subcategory
+        nativeSettings.addSubcategory("/RentMotel/PermanentRenting", "Permanent Renting")
+        
+        -- Permanent renting toggle switch
+        nativeSettings.addSwitch("/RentMotel/PermanentRenting", "Enable Permanent Renting", "When enabled, adds a third option for renting a motel room, with permanent ownership (999999 days). Default: Disabled.", 
+            Config.permanentRentingEnabled or false, false, function(state)
+                Config.permanentRentingEnabled = state
+                Config.Save()
+            end)
+        
+        -- Permanent price sliders for each room
+        nativeSettings.addRangeInt("/RentMotel/PermanentRenting", "Sunset Motel Permanent Price", "Price for permanent ownership of Sunset Motel Room 102. Default: 45000€$", 1000, 500000, 1000, 
+            Config.permanentPrices.sunset_motel_room_102 or 45000, 45000, function(value)
+                Config.permanentPrices.sunset_motel_room_102 = value
+                Config.Save()
+            end)
+        
+        nativeSettings.addRangeInt("/RentMotel/PermanentRenting", "Kabuki Motel Permanent Price", "Price for permanent ownership of Kabuki Motel Room 203. Default: 70000€$", 1000, 500000, 1000, 
+            Config.permanentPrices.kabuki_motel_room_203 or 70000, 70000, function(value)
+                Config.permanentPrices.kabuki_motel_room_203 = value
+                Config.Save()
+            end)
+        
+        nativeSettings.addRangeInt("/RentMotel/PermanentRenting", "Dewdrop Inn Permanent Price", "Price for permanent ownership of Dewdrop Inn Room 106. Default: 100000€$", 1000, 500000, 1000, 
+            Config.permanentPrices.DewdropInn_motel_room_106 or 100000, 100000, function(value)
+                Config.permanentPrices.DewdropInn_motel_room_106 = value
+                Config.Save()
+            end)
+        
+        nativeSettings.addRangeInt("/RentMotel/PermanentRenting", "No-Tell Motel Permanent Price", "Price for permanent ownership of No-Tell Motel Room 206. Default: 70000€$", 1000, 500000, 1000, 
+            Config.permanentPrices.NoTell_motel_room_206 or 70000, 70000, function(value)
+                Config.permanentPrices.NoTell_motel_room_206 = value
+                Config.Save()
+            end)
     end
 end)
 
@@ -864,24 +928,37 @@ registerForEvent("onUpdate", function(delta)
     if RentMotelManager.activeInteractionRoomId or isHallwayDoorInteractionActive then
         interactionUI.update()
     end
-    RentMotelManager.checkPlayerProximity()
+    
+    -- Throttle proximity checks (runs every 200ms)
+    proximityCheckTimer = proximityCheckTimer + delta
+    if proximityCheckTimer >= proximityCheckInterval then
+        proximityCheckTimer = 0
+        RentMotelManager.checkPlayerProximity()
+    end
+
+    -- Throttle rent expiry checks (runs every 1 second)
+    expiryCheckTimer = expiryCheckTimer + delta
+    if expiryCheckTimer < expiryCheckInterval then
+        return -- Skip expiry check this frame
+    end
+    expiryCheckTimer = 0
+
+    -- Get time and player once outside the loop (performance optimization)
+    local timeSystem = Game.GetTimeSystem()
+    if not timeSystem then return end
+    local now = timeSystem:GetGameTime()
+    local nowSeconds = now:GetSeconds()
+    local player = Game.GetPlayer()
+    local playerPosition = player and player:GetWorldPosition()
 
     -- Check all rooms for rent expiry
     for roomId, room in pairs(RentMotelManager.rooms) do
         if not room.config.isDoorLocked and room.config.doorUnlockExpirySeconds then
-            local now = Game.GetTimeSystem():GetGameTime()
-
             -- Handle expired rent period
-            if now:GetSeconds() >= room.config.doorUnlockExpirySeconds then
-                --print("[RentMotelMod] Rent expired for room: " .. roomId .. ". Current time: " .. now:GetSeconds() .. ", Expiry time: " .. room.config.doorUnlockExpirySeconds)
-                local player = Game.GetPlayer()
-                local playerPosition = player and player:GetWorldPosition()
-                local roomDef = getRoomDefinitionById(roomId)
+            if nowSeconds >= room.config.doorUnlockExpirySeconds then
+                --print("[RentMotelMod] Rent expired for room: " .. roomId .. ". Current time: " .. nowSeconds .. ", Expiry time: " .. room.config.doorUnlockExpirySeconds)
+                local roomDef = ROOM_DEFINITIONS_BY_ID[roomId] -- Use lookup table
                 --print("[RentMotelMod] Player position: " .. (playerPosition and (playerPosition.x .. "," .. playerPosition.y .. "," .. playerPosition.z) or "nil"))
-                if roomDef and roomDef.roomBoundsMin and roomDef.roomBoundsMax then
-                    --print("[RentMotelMod] " .. roomId .. " BoundsMin: " .. roomDef.roomBoundsMin.x .. "," .. roomDef.roomBoundsMin.y .. "," .. roomDef.roomBoundsMin.z)
-                    --print("[RentMotelMod] " .. roomId .. " BoundsMax: " .. roomDef.roomBoundsMax.x .. "," .. roomDef.roomBoundsMax.y .. "," .. roomDef.roomBoundsMax.z)
-                end
 
                 -- First-time physical position check at expiry
                 -- This check determines if the player was inside the room at the exact moment the rent expired.
