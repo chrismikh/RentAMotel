@@ -175,6 +175,24 @@ function RoomManager.checkPlayerProximity()
         if not isPlayerInsideAnyRoom and roomDef and roomDef.roomBoundsMin and roomDef.roomBoundsMax then
             if IsPlayerPhysicallyInsideRoom(playerPos, roomDef.roomBoundsMin, roomDef.roomBoundsMax) then
                 isPlayerInsideAnyRoom = true
+
+                if room.config.isDoorLocked then
+                    local door = Game.FindEntityByID(room.doorID)
+                    if door then
+                        local ps = door:GetDevicePS()
+                        if ps then
+                            if ps:IsSealed() then ps:ToggleSealOnDoor() end
+                            if ps:IsLocked() then ps:ToggleLockOnDoor() end
+                            Cron.After(3.0, function()
+                                local p = Game.GetPlayer()
+                                local pPos = p and p:GetWorldPosition()
+                                if pPos and not IsPlayerPhysicallyInsideRoom(pPos, roomDef.roomBoundsMin, roomDef.roomBoundsMax) then
+                                    doorControl.LockDoor(roomId)
+                                end
+                            end)
+                        end
+                    end
+                end
             end
         end
         

@@ -110,8 +110,7 @@ registerForEvent("onInit", function()
     end
 end)
 
--- CET Console Command: Reset all rooms to default locked state
--- Usage: Type RentMotelReset() in the CET console to lock and seal all doors.
+-- CET Console Command/hotkey: Reset all rooms to default locked state
 function RentMotelReset()
     print("[RentMotelMod] Resetting all rooms to default locked state...")
     for roomId, room in pairs(RoomManager.rooms) do
