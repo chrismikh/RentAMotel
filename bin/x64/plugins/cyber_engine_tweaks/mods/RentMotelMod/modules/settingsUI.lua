@@ -53,6 +53,16 @@ function SettingsUI.setup(nativeSettings)
                 RoomManager.rooms["NoTell_motel_room_206"].config.rentCost = value
             end
         end)
+
+    -- Las Palapas Motel Room 111 price slider
+    nativeSettings.addRangeInt("/RentMotel/Prices", L("RentMotel-Settings-LasPalapasPrice"), L("RentMotel-Settings-LasPalapasPriceDesc"), 10, 30000, 10, 
+        Config.prices.LasPalapas_motel_room_111 or 800, 800, function(value)
+            Config.prices.LasPalapas_motel_room_111 = value
+            Config.Save()
+            if RoomManager.rooms["LasPalapas_motel_room_111"] then
+                RoomManager.rooms["LasPalapas_motel_room_111"].config.rentCost = value
+            end
+        end)
     
     -- Add rental options subcategory
     nativeSettings.addSubcategory("/RentMotel/RentalOptions", L("RentMotel-Settings-RentalOptionsCategory"))
@@ -96,6 +106,12 @@ function SettingsUI.setup(nativeSettings)
     nativeSettings.addRangeInt("/RentMotel/PermanentRenting", L("RentMotel-Settings-NoTellPermanentPrice"), L("RentMotel-Settings-NoTellPermanentPriceDesc"), 1000, 500000, 1000, 
         Config.permanentPrices.NoTell_motel_room_206 or 70000, 70000, function(value)
             Config.permanentPrices.NoTell_motel_room_206 = value
+            Config.Save()
+        end)
+    
+    nativeSettings.addRangeInt("/RentMotel/PermanentRenting", L("RentMotel-Settings-LasPalapasPermanentPrice"), L("RentMotel-Settings-LasPalapasPermanentPriceDesc"), 1000, 500000, 1000, 
+        Config.permanentPrices.LasPalapas_motel_room_111 or 80000, 80000, function(value)
+            Config.permanentPrices.LasPalapas_motel_room_111 = value
             Config.Save()
         end)
 end

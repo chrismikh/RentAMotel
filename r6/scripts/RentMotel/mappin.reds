@@ -79,6 +79,25 @@ class MotelMappinSS extends ScriptableSystem {
 
         let noTellID: NewMappinID = GameInstance.GetMappinSystem(GetGameInstance()).RegisterMappin(noTellData, noTellPos);
         ArrayPush(this.mappinIDs, noTellID);
+
+        ////////////////////////////////////////////////////////////////////////////
+
+        // Las Palapas Motel Mappin Creation
+        let lasPalapasPos: Vector4;
+        lasPalapasPos.X = -1057.1802;
+        lasPalapasPos.Y = -1505.9418;
+        lasPalapasPos.Z = 30.624245;
+        lasPalapasPos.W = 1.0;
+
+        let lasPalapasData: MappinData = new MappinData();
+        lasPalapasData.mappinType = t"Mappins.DefaultStaticMappin";
+        lasPalapasData.variant = gamedataMappinVariant.Zzz05_ApartmentToPurchaseVariant;
+        lasPalapasData.active = true;
+        lasPalapasData.debugCaption = "RM_RentMotel|" + GetLocalizedTextByKey(n"RentMotel-Title-LasPalapas") + "|" + GetLocalizedTextByKey(n"RentMotel-Desc-LasPalapas");
+        lasPalapasData.visibleThroughWalls = false;
+
+        let lasPalapasID: NewMappinID = GameInstance.GetMappinSystem(GetGameInstance()).RegisterMappin(lasPalapasData, lasPalapasPos);
+        ArrayPush(this.mappinIDs, lasPalapasID);
     }
 
     public func RemoveMotelMappin() {

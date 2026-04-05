@@ -8,7 +8,8 @@ Config.defaults = {
     sunset_motel_room_102 = 450,
     kabuki_motel_room_203 = 700,
     DewdropInn_motel_room_106 = 1000,
-    NoTell_motel_room_206 = 700
+    NoTell_motel_room_206 = 700,
+    LasPalapas_motel_room_111 = 800
 }
 
 -- Default extended rental duration (in days)
@@ -22,7 +23,8 @@ Config.defaultPermanentPrices = {
     sunset_motel_room_102 = 45000,
     kabuki_motel_room_203 = 70000,
     DewdropInn_motel_room_106 = 100000,
-    NoTell_motel_room_206 = 70000
+    NoTell_motel_room_206 = 70000,
+    LasPalapas_motel_room_111 = 80000
 }
 
 -- Runtime prices (loaded from file or defaults)

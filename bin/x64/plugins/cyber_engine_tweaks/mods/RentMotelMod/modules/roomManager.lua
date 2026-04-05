@@ -5,6 +5,7 @@ local GameSession = require("modules/GameSession")
 local ROOM_DEFINITIONS = RoomDefs.ROOM_DEFINITIONS
 local ROOM_DEFINITIONS_BY_ID = RoomDefs.ROOM_DEFINITIONS_BY_ID
 local IsPlayerPhysicallyInsideRoom = RoomDefs.IsPlayerPhysicallyInsideRoom
+local LAS_PALAPAS_ROOM_ID = "LasPalapas_motel_room_111"
 
 -- Main table for managing the state of rentable motel rooms
 local RoomManager = {
@@ -176,7 +177,7 @@ function RoomManager.checkPlayerProximity()
             if IsPlayerPhysicallyInsideRoom(playerPos, roomDef.roomBoundsMin, roomDef.roomBoundsMax) then
                 isPlayerInsideAnyRoom = true
 
-                if room.config.isDoorLocked then
+                if room.config.isDoorLocked and roomId ~= LAS_PALAPAS_ROOM_ID then
                     local door = Game.FindEntityByID(room.doorID)
                     if door then
                         local ps = door:GetDevicePS()

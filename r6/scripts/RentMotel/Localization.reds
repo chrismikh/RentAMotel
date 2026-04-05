@@ -32,18 +32,21 @@ public class English extends ModLocalizationPackage {
     this.Text("RentMotel-Room-Kabuki", "Kabuki Motel Room");
     this.Text("RentMotel-Room-Dewdrop", "Dewdrop Inn Motel Room");
     this.Text("RentMotel-Room-NoTell", "No-Tell Motel Room");
+    this.Text("RentMotel-Room-LasPalapas", "Las Palapas Motel Room");
 
     // Mappin titles
     this.Text("RentMotel-Title-Sunset", "Sunset Motel room 102");
     this.Text("RentMotel-Title-Kabuki", "Kabuki Motel room 203");
     this.Text("RentMotel-Title-Dewdrop", "Dewdrop Inn Motel room 106");
     this.Text("RentMotel-Title-NoTell", "No-Tell Motel room 206");
+    this.Text("RentMotel-Title-LasPalapas", "Las Palapas Motel room 111");
 
     // Mappin descriptions
     this.Text("RentMotel-Desc-Sunset", "Rentable motel room");
     this.Text("RentMotel-Desc-Kabuki", "Rentable motel room");
     this.Text("RentMotel-Desc-Dewdrop", "Rentable motel room");
     this.Text("RentMotel-Desc-NoTell", "Rentable motel room");
+    this.Text("RentMotel-Desc-LasPalapas", "Rentable motel room");
 
     // UI strings
     this.Text("RentMotel-UI-OpenDoor", "Open Door");
@@ -71,6 +74,8 @@ public class English extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPriceDesc", "Default: 1000€$");
     this.Text("RentMotel-Settings-NoTellPrice", "No-Tell Motel Room 206");
     this.Text("RentMotel-Settings-NoTellPriceDesc", "Default: 700€$");
+    this.Text("RentMotel-Settings-LasPalapasPrice", "Las Palapas Motel Room 111");
+    this.Text("RentMotel-Settings-LasPalapasPriceDesc", "Default: 800€$");
     this.Text("RentMotel-Settings-ExtendedDays", "Extended Rental Duration (Days)");
     this.Text("RentMotel-Settings-ExtendedDaysDesc", "Set the number of days for extended rental option. Default: 7 days. Price includes 10% discount.");
     this.Text("RentMotel-Settings-PermanentToggle", "Enable Permanent Renting");
@@ -83,6 +88,8 @@ public class English extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPermanentPriceDesc", "Price for permanent ownership of Dewdrop Inn Room 106. Default: 100000€$");
     this.Text("RentMotel-Settings-NoTellPermanentPrice", "No-Tell Motel Permanent Price");
     this.Text("RentMotel-Settings-NoTellPermanentPriceDesc", "Price for permanent ownership of No-Tell Motel Room 206. Default: 70000€$");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPrice", "Las Palapas Motel Permanent Price");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPriceDesc", "Price for permanent ownership of Las Palapas Motel Room 111. Default: 80000€$");
   }
 
   protected func DefineSubtitles() -> Void {
@@ -97,18 +104,21 @@ public class Russian extends ModLocalizationPackage {
     this.Text("RentMotel-Room-Kabuki", "Комната Мотеля Кабуки");
     this.Text("RentMotel-Room-Dewdrop", "Комната Мотеля Дьюдроп Инн");
     this.Text("RentMotel-Room-NoTell", "Комната Мотеля Но-Телл");
+    this.Text("RentMotel-Room-LasPalapas", "Комната Мотеля Las Palapas");
 
     // Mappin titles
     this.Text("RentMotel-Title-Sunset", "Мотель Сансет, комната 102");
     this.Text("RentMotel-Title-Kabuki", "Мотель Кабуки, комната 203");
     this.Text("RentMotel-Title-Dewdrop", "Мотель Дьюдроп Инн, комната 106");
     this.Text("RentMotel-Title-NoTell", "Мотель Но-Телл, комната 206");
+    this.Text("RentMotel-Title-LasPalapas", "Мотель Las Palapas, комната 111");
 
     // Mappin descriptions
     this.Text("RentMotel-Desc-Sunset", "Комната мотеля в аренду");
     this.Text("RentMotel-Desc-Kabuki", "Комната мотеля в аренду");
     this.Text("RentMotel-Desc-Dewdrop", "Комната мотеля в аренду");
     this.Text("RentMotel-Desc-NoTell", "Комната мотеля в аренду");
+    this.Text("RentMotel-Desc-LasPalapas", "Комната мотеля в аренду");
 
     // UI strings
     this.Text("RentMotel-UI-OpenDoor", "Открыть дверь");
@@ -136,6 +146,8 @@ public class Russian extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPriceDesc", "По умолчанию: 1000€$");
     this.Text("RentMotel-Settings-NoTellPrice", "Мотель Но-Телл, комната 206");
     this.Text("RentMotel-Settings-NoTellPriceDesc", "По умолчанию: 700€$");
+    this.Text("RentMotel-Settings-LasPalapasPrice", "Мотель Las Palapas, комната 111");
+    this.Text("RentMotel-Settings-LasPalapasPriceDesc", "По умолчанию: 800€$");
     this.Text("RentMotel-Settings-ExtendedDays", "Продолжительность аренды (дни)");
     this.Text("RentMotel-Settings-ExtendedDaysDesc", "Количество дней для расширенной аренды. По умолчанию: 7 дней. Цена включает скидку 10%.");
     this.Text("RentMotel-Settings-PermanentToggle", "Включить постоянную аренду");
@@ -148,6 +160,8 @@ public class Russian extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPermanentPriceDesc", "Цена постоянного владения Мотель Дьюдроп Инн, комната 106. По умолчанию: 100000€$");
     this.Text("RentMotel-Settings-NoTellPermanentPrice", "Постоянная цена Мотель Но-Телл");
     this.Text("RentMotel-Settings-NoTellPermanentPriceDesc", "Цена постоянного владения Мотель Но-Телл, комната 206. По умолчанию: 70000€$");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPrice", "Постоянная цена Мотель Las Palapas");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPriceDesc", "Цена постоянного владения Мотель Las Palapas, комната 111. По умолчанию: 80000€$");
   }
 
   protected func DefineSubtitles() -> Void {
@@ -162,18 +176,21 @@ public class French extends ModLocalizationPackage {
     this.Text("RentMotel-Room-Kabuki", "Chambre du Kabuki Motel");
     this.Text("RentMotel-Room-Dewdrop", "Chambre du Dewdrop Inn Motel");
     this.Text("RentMotel-Room-NoTell", "Chambre du No-Tell Motel");
+    this.Text("RentMotel-Room-LasPalapas", "Chambre du Las Palapas Motel");
 
     // Mappin titles
     this.Text("RentMotel-Title-Sunset", "Sunset Motel chambre 102");
     this.Text("RentMotel-Title-Kabuki", "Kabuki Motel chambre 203");
     this.Text("RentMotel-Title-Dewdrop", "Dewdrop Inn Motel chambre 106");
     this.Text("RentMotel-Title-NoTell", "No-Tell Motel chambre 206");
+    this.Text("RentMotel-Title-LasPalapas", "Las Palapas Motel chambre 111");
 
     // Mappin descriptions
     this.Text("RentMotel-Desc-Sunset", "Chambre de motel louable");
     this.Text("RentMotel-Desc-Kabuki", "Chambre de motel louable");
     this.Text("RentMotel-Desc-Dewdrop", "Chambre de motel louable");
     this.Text("RentMotel-Desc-NoTell", "Chambre de motel louable");
+    this.Text("RentMotel-Desc-LasPalapas", "Chambre de motel louable");
 
     // UI strings
     this.Text("RentMotel-UI-OpenDoor", "Ouvrir la Porte");
@@ -201,6 +218,8 @@ public class French extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPriceDesc", "Par défaut : 1000€$");
     this.Text("RentMotel-Settings-NoTellPrice", "No-Tell Motel Chambre 206");
     this.Text("RentMotel-Settings-NoTellPriceDesc", "Par défaut : 700€$");
+    this.Text("RentMotel-Settings-LasPalapasPrice", "Las Palapas Motel Chambre 111");
+    this.Text("RentMotel-Settings-LasPalapasPriceDesc", "Par défaut : 800€$");
     this.Text("RentMotel-Settings-ExtendedDays", "Durée de location prolongée (jours)");
     this.Text("RentMotel-Settings-ExtendedDaysDesc", "Nombre de jours pour la location prolongée. Par défaut : 7 jours. Le prix inclut une réduction de 10%.");
     this.Text("RentMotel-Settings-PermanentToggle", "Activer la location permanente");
@@ -213,6 +232,8 @@ public class French extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPermanentPriceDesc", "Prix de propriété permanente du Dewdrop Inn Chambre 106. Par défaut : 100000€$");
     this.Text("RentMotel-Settings-NoTellPermanentPrice", "Prix permanent No-Tell Motel");
     this.Text("RentMotel-Settings-NoTellPermanentPriceDesc", "Prix de propriété permanente du No-Tell Motel Chambre 206. Par défaut : 70000€$");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPrice", "Prix permanent Las Palapas Motel");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPriceDesc", "Prix de propriété permanente du Las Palapas Motel Chambre 111. Par défaut : 80000€$");
   }
 
   protected func DefineSubtitles() -> Void {
@@ -227,18 +248,21 @@ public class BrazilianPortuguese extends ModLocalizationPackage {
     this.Text("RentMotel-Room-Kabuki", "Quarto do Motel Kabuki");
     this.Text("RentMotel-Room-Dewdrop", "Quarto da Pousada Dewdrop");
     this.Text("RentMotel-Room-NoTell", "Quarto do Motel No-Tell");
+    this.Text("RentMotel-Room-LasPalapas", "Quarto do Motel Las Palapas");
 
     // Mappin titles
     this.Text("RentMotel-Title-Sunset", "Motel Sunset quarto 102");
     this.Text("RentMotel-Title-Kabuki", "Motel Kabuki quarto 203");
     this.Text("RentMotel-Title-Dewdrop", "Pousada Dewdrop quarto 106");
     this.Text("RentMotel-Title-NoTell", "Motel No-Tell quarto 206");
+    this.Text("RentMotel-Title-LasPalapas", "Motel Las Palapas quarto 111");
 
     // Mappin descriptions
     this.Text("RentMotel-Desc-Sunset", "Quarto de motel para alugar");
     this.Text("RentMotel-Desc-Kabuki", "Quarto de motel para alugar");
     this.Text("RentMotel-Desc-Dewdrop", "Quarto de motel para alugar");
     this.Text("RentMotel-Desc-NoTell", "Quarto de motel para alugar");
+    this.Text("RentMotel-Desc-LasPalapas", "Quarto de motel para alugar");
 
     // UI strings
     this.Text("RentMotel-UI-OpenDoor", "Abrir porta");
@@ -266,6 +290,8 @@ public class BrazilianPortuguese extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPriceDesc", "Padrão: 1000€$");
     this.Text("RentMotel-Settings-NoTellPrice", "Motel No-Tell Quarto 206");
     this.Text("RentMotel-Settings-NoTellPriceDesc", "Padrão: 700€$");
+    this.Text("RentMotel-Settings-LasPalapasPrice", "Motel Las Palapas Quarto 111");
+    this.Text("RentMotel-Settings-LasPalapasPriceDesc", "Padrão: 800€$");
     this.Text("RentMotel-Settings-ExtendedDays", "Duração do aluguel prolongado (dias)");
     this.Text("RentMotel-Settings-ExtendedDaysDesc", "Número de dias para o aluguel prolongado. Padrão: 7 dias. O preço inclui 10% de desconto.");
     this.Text("RentMotel-Settings-PermanentToggle", "Ativar aluguel permanente");
@@ -278,6 +304,8 @@ public class BrazilianPortuguese extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPermanentPriceDesc", "Preço de propriedade permanente da Pousada Dewdrop Quarto 106. Padrão: 100000€$");
     this.Text("RentMotel-Settings-NoTellPermanentPrice", "Preço permanente Motel No-Tell");
     this.Text("RentMotel-Settings-NoTellPermanentPriceDesc", "Preço de propriedade permanente do Motel No-Tell Quarto 206. Padrão: 70000€$");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPrice", "Preço permanente Motel Las Palapas");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPriceDesc", "Preço de propriedade permanente do Motel Las Palapas Quarto 111. Padrão: 80000€$");
   }
 
   protected func DefineSubtitles() -> Void {
@@ -292,18 +320,21 @@ public class Spanish extends ModLocalizationPackage {
     this.Text("RentMotel-Room-Kabuki", "Habitación del Motel Kabuki");
     this.Text("RentMotel-Room-Dewdrop", "Habitación del Motel Dewdrop Inn");
     this.Text("RentMotel-Room-NoTell", "Habitación del Motel No-Tell");
+    this.Text("RentMotel-Room-LasPalapas", "Habitación del Motel Las Palapas");
 
     // Mappin titles
     this.Text("RentMotel-Title-Sunset", "Habitación Disponible - Motel Sunset 102");
     this.Text("RentMotel-Title-Kabuki", "Habitación Disponible - Motel Kabuki 203");
     this.Text("RentMotel-Title-Dewdrop", "Habitación Disponible - Dewdrop Inn 106");
     this.Text("RentMotel-Title-NoTell", "Habitación Disponible - No-Tell Motel 206");
+    this.Text("RentMotel-Title-LasPalapas", "Habitación Disponible - Las Palapas Motel 111");
 
     // Mappin descriptions
     this.Text("RentMotel-Desc-Sunset", "Habitación de motel en alquiler");
     this.Text("RentMotel-Desc-Kabuki", "Habitación de motel en alquiler");
     this.Text("RentMotel-Desc-Dewdrop", "Habitación de motel en alquiler");
     this.Text("RentMotel-Desc-NoTell", "Habitación de motel en alquiler");
+    this.Text("RentMotel-Desc-LasPalapas", "Habitación de motel en alquiler");
 
     // UI strings
     this.Text("RentMotel-UI-OpenDoor", "Abrir puerta");
@@ -331,6 +362,8 @@ public class Spanish extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPriceDesc", "Por defecto: 1000€$");
     this.Text("RentMotel-Settings-NoTellPrice", "No-Tell Motel Habitación 206");
     this.Text("RentMotel-Settings-NoTellPriceDesc", "Por defecto: 700€$");
+    this.Text("RentMotel-Settings-LasPalapasPrice", "Las Palapas Motel Habitación 111");
+    this.Text("RentMotel-Settings-LasPalapasPriceDesc", "Por defecto: 800€$");
     this.Text("RentMotel-Settings-ExtendedDays", "Duración de alquiler extendido (días)");
     this.Text("RentMotel-Settings-ExtendedDaysDesc", "Número de días para el alquiler extendido. Por defecto: 7 días. El precio incluye un 10% de descuento.");
     this.Text("RentMotel-Settings-PermanentToggle", "Activar alquiler permanente");
@@ -343,6 +376,8 @@ public class Spanish extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPermanentPriceDesc", "Precio de propiedad permanente del Dewdrop Inn Habitación 106. Por defecto: 100000€$");
     this.Text("RentMotel-Settings-NoTellPermanentPrice", "Precio permanente No-Tell Motel");
     this.Text("RentMotel-Settings-NoTellPermanentPriceDesc", "Precio de propiedad permanente del No-Tell Motel Habitación 206. Por defecto: 70000€$");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPrice", "Precio permanente Las Palapas Motel");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPriceDesc", "Precio de propiedad permanente del Las Palapas Motel Habitación 111. Por defecto: 80000€$");
   }
 
   protected func DefineSubtitles() -> Void {
@@ -357,18 +392,21 @@ public class TraditionalChinese extends ModLocalizationPackage {
     this.Text("RentMotel-Room-Kabuki", "歌舞伎町汽車旅館房間");
     this.Text("RentMotel-Room-Dewdrop", "露珠汽車旅館房間");
     this.Text("RentMotel-Room-NoTell", "不語汽車旅館房間");
+    this.Text("RentMotel-Room-LasPalapas", "Las Palapas汽車旅館房間");
 
     // Mappin titles
     this.Text("RentMotel-Title-Sunset", "日落汽車旅館-102房間");
     this.Text("RentMotel-Title-Kabuki", "歌舞伎町汽車旅館-203房間");
     this.Text("RentMotel-Title-Dewdrop", "露珠汽車旅館-106房間");
     this.Text("RentMotel-Title-NoTell", "不語汽車旅館-206房間");
+    this.Text("RentMotel-Title-LasPalapas", "Las Palapas汽車旅館-111房間");
 
     // Mappin descriptions
     this.Text("RentMotel-Desc-Sunset", "可租用的汽車旅館房間");
     this.Text("RentMotel-Desc-Kabuki", "可租用的汽車旅館房間");
     this.Text("RentMotel-Desc-Dewdrop", "可租用的汽車旅館房間");
     this.Text("RentMotel-Desc-NoTell", "可租用的汽車旅館房間");
+    this.Text("RentMotel-Desc-LasPalapas", "可租用的汽車旅館房間");
 
     // UI strings
     this.Text("RentMotel-UI-OpenDoor", "開門");
@@ -396,6 +434,8 @@ public class TraditionalChinese extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPriceDesc", "預設: 1000€$");
     this.Text("RentMotel-Settings-NoTellPrice", "不語汽車旅館-206房間");
     this.Text("RentMotel-Settings-NoTellPriceDesc", "預設: 700€$");
+    this.Text("RentMotel-Settings-LasPalapasPrice", "Las Palapas汽車旅館-111房間");
+    this.Text("RentMotel-Settings-LasPalapasPriceDesc", "預設: 800€$");
     this.Text("RentMotel-Settings-ExtendedDays", "延長租用天數");
     this.Text("RentMotel-Settings-ExtendedDaysDesc", "設定延長租用的天數。預設: 7天。價格包含10%折扣。");
     this.Text("RentMotel-Settings-PermanentToggle", "啟用永久租用");
@@ -408,6 +448,8 @@ public class TraditionalChinese extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPermanentPriceDesc", "露珠汽車旅館106房間的永久擁有價格。預設: 100000€$");
     this.Text("RentMotel-Settings-NoTellPermanentPrice", "不語汽車旅館永久價格");
     this.Text("RentMotel-Settings-NoTellPermanentPriceDesc", "不語汽車旅館206房間的永久擁有價格。預設: 70000€$");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPrice", "Las Palapas汽車旅館永久價格");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPriceDesc", "Las Palapas汽車旅館111房間的永久擁有價格。預設: 80000€$");
   }
 
   protected func DefineSubtitles() -> Void {
@@ -422,18 +464,21 @@ public class SimplifiedChinese extends ModLocalizationPackage {
     this.Text("RentMotel-Room-Kabuki", "歌舞伎汽车旅馆房间");
     this.Text("RentMotel-Room-Dewdrop", "露珠旅馆房间");
     this.Text("RentMotel-Room-NoTell", "无名汽车旅馆房间");
+    this.Text("RentMotel-Room-LasPalapas", "Las Palapas汽车旅馆房间");
 
     // Mappin titles
     this.Text("RentMotel-Title-Sunset", "日落汽车旅馆102房间");
     this.Text("RentMotel-Title-Kabuki", "歌舞伎汽车旅馆203房间");
     this.Text("RentMotel-Title-Dewdrop", "露珠旅馆106房间");
     this.Text("RentMotel-Title-NoTell", "无名汽车旅馆206房间");
+    this.Text("RentMotel-Title-LasPalapas", "Las Palapas汽车旅馆111房间");
 
     // Mappin descriptions
     this.Text("RentMotel-Desc-Sunset", "可租用的汽车旅馆房间");
     this.Text("RentMotel-Desc-Kabuki", "可租用的汽车旅馆房间");
     this.Text("RentMotel-Desc-Dewdrop", "可租用的汽车旅馆房间");
     this.Text("RentMotel-Desc-NoTell", "可租用的汽车旅馆房间");
+    this.Text("RentMotel-Desc-LasPalapas", "可租用的汽车旅馆房间");
 
     // UI strings
     this.Text("RentMotel-UI-OpenDoor", "开门");
@@ -461,6 +506,8 @@ public class SimplifiedChinese extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPriceDesc", "默认: 1000€$");
     this.Text("RentMotel-Settings-NoTellPrice", "无名汽车旅馆206房间");
     this.Text("RentMotel-Settings-NoTellPriceDesc", "默认: 700€$");
+    this.Text("RentMotel-Settings-LasPalapasPrice", "Las Palapas汽车旅馆111房间");
+    this.Text("RentMotel-Settings-LasPalapasPriceDesc", "默认: 800€$");
     this.Text("RentMotel-Settings-ExtendedDays", "延长租用天数");
     this.Text("RentMotel-Settings-ExtendedDaysDesc", "设定延长租用的天数。默认: 7天。价格包含10%折扣。");
     this.Text("RentMotel-Settings-PermanentToggle", "启用永久租用");
@@ -473,6 +520,8 @@ public class SimplifiedChinese extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPermanentPriceDesc", "露珠旅馆106房间的永久拥有价格。默认: 100000€$");
     this.Text("RentMotel-Settings-NoTellPermanentPrice", "无名汽车旅馆永久价格");
     this.Text("RentMotel-Settings-NoTellPermanentPriceDesc", "无名汽车旅馆206房间的永久拥有价格。默认: 70000€$");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPrice", "Las Palapas汽车旅馆永久价格");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPriceDesc", "Las Palapas汽车旅馆111房间的永久拥有价格。默认: 80000€$");
   }
    
    protected func DefineSubtitles() -> Void {
@@ -487,18 +536,21 @@ public class Japanese extends ModLocalizationPackage {
     this.Text("RentMotel-Room-Kabuki", "カブキ・モーテルルーム");
     this.Text("RentMotel-Room-Dewdrop", "デュードロップ・モーテルルーム");
     this.Text("RentMotel-Room-NoTell", "ノーテル・モーテルルーム");
+    this.Text("RentMotel-Room-LasPalapas", "ラス・パラパス・モーテルルーム");
  
     // Mappin titles
     this.Text("RentMotel-Title-Sunset", "サンセット・モーテル 102号室");
     this.Text("RentMotel-Title-Kabuki", "カブキ・モーテル 203号室");
     this.Text("RentMotel-Title-Dewdrop", "デュードロップ・モーテル 106号室");
     this.Text("RentMotel-Title-NoTell", "ノーテル・モーテル 206号室");
+    this.Text("RentMotel-Title-LasPalapas", "ラス・パラパス・モーテル 111号室");
  
     // Mappin descriptions
     this.Text("RentMotel-Desc-Sunset", "レンタル可能なモーテルルーム");
     this.Text("RentMotel-Desc-Kabuki", "レンタル可能なモーテルルーム");
     this.Text("RentMotel-Desc-Dewdrop", "レンタル可能なモーテルルーム");
     this.Text("RentMotel-Desc-NoTell", "レンタル可能なモーテルルーム");
+    this.Text("RentMotel-Desc-LasPalapas", "レンタル可能なモーテルルーム");
 
     // UI strings
     this.Text("RentMotel-UI-OpenDoor", "ドアを開ける");
@@ -526,6 +578,8 @@ public class Japanese extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPriceDesc", "デフォルト: 1000€$");
     this.Text("RentMotel-Settings-NoTellPrice", "ノーテル・モーテル 206号室");
     this.Text("RentMotel-Settings-NoTellPriceDesc", "デフォルト: 700€$");
+    this.Text("RentMotel-Settings-LasPalapasPrice", "ラス・パラパス・モーテル 111号室");
+    this.Text("RentMotel-Settings-LasPalapasPriceDesc", "デフォルト: 800€$");
     this.Text("RentMotel-Settings-ExtendedDays", "延長レンタル日数");
     this.Text("RentMotel-Settings-ExtendedDaysDesc", "延長レンタルの日数を設定します。デフォルト: 7日。価格には10%割引が含まれます。");
     this.Text("RentMotel-Settings-PermanentToggle", "永久レンタルを有効にする");
@@ -538,6 +592,8 @@ public class Japanese extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPermanentPriceDesc", "デュードロップ・モーテル106号室の永久所有価格。デフォルト: 100000€$");
     this.Text("RentMotel-Settings-NoTellPermanentPrice", "ノーテル・モーテル永久価格");
     this.Text("RentMotel-Settings-NoTellPermanentPriceDesc", "ノーテル・モーテル206号室の永久所有価格。デフォルト: 70000€$");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPrice", "ラス・パラパス・モーテル永久価格");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPriceDesc", "ラス・パラパス・モーテル111号室の永久所有価格。デフォルト: 80000€$");
   }
  
   protected func DefineSubtitles() -> Void {
@@ -552,18 +608,21 @@ public class Italian extends ModLocalizationPackage {
     this.Text("RentMotel-Room-Kabuki", "Stanza del Kabuki Motel");
     this.Text("RentMotel-Room-Dewdrop", "Stanza del Dewdrop Inn Motel");
     this.Text("RentMotel-Room-NoTell", "Stanza del No-Tell Motel");
+    this.Text("RentMotel-Room-LasPalapas", "Stanza del Las Palapas Motel");
 
     // Mappin titles
     this.Text("RentMotel-Title-Sunset", "Sunset Motel stanza 102");
     this.Text("RentMotel-Title-Kabuki", "Kabuki Motel stanza 203");
     this.Text("RentMotel-Title-Dewdrop", "Dewdrop Inn Motel stanza 106");
     this.Text("RentMotel-Title-NoTell", "No-Tell Motel stanza 206");
+    this.Text("RentMotel-Title-LasPalapas", "Las Palapas Motel stanza 111");
 
     // Mappin descriptions
     this.Text("RentMotel-Desc-Sunset", "Stanza di motel affittabile");
     this.Text("RentMotel-Desc-Kabuki", "Stanza di motel affittabile");
     this.Text("RentMotel-Desc-Dewdrop", "Stanza di motel affittabile");
     this.Text("RentMotel-Desc-NoTell", "Stanza di motel affittabile");
+    this.Text("RentMotel-Desc-LasPalapas", "Stanza di motel affittabile");
 
     // UI strings
     this.Text("RentMotel-UI-OpenDoor", "Apri la porta");
@@ -591,6 +650,8 @@ public class Italian extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPriceDesc", "Predefinito: 1000€$");
     this.Text("RentMotel-Settings-NoTellPrice", "No-Tell Motel Stanza 206");
     this.Text("RentMotel-Settings-NoTellPriceDesc", "Predefinito: 700€$");
+    this.Text("RentMotel-Settings-LasPalapasPrice", "Las Palapas Motel Stanza 111");
+    this.Text("RentMotel-Settings-LasPalapasPriceDesc", "Predefinito: 800€$");
     this.Text("RentMotel-Settings-ExtendedDays", "Durata affitto prolungato (giorni)");
     this.Text("RentMotel-Settings-ExtendedDaysDesc", "Imposta il numero di giorni per l'affitto prolungato. Predefinito: 7 giorni. Il prezzo include uno sconto del 10%.");
     this.Text("RentMotel-Settings-PermanentToggle", "Abilita affitto permanente");
@@ -603,6 +664,8 @@ public class Italian extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPermanentPriceDesc", "Prezzo di proprietà permanente del Dewdrop Inn Stanza 106. Predefinito: 100000€$");
     this.Text("RentMotel-Settings-NoTellPermanentPrice", "Prezzo permanente No-Tell Motel");
     this.Text("RentMotel-Settings-NoTellPermanentPriceDesc", "Prezzo di proprietà permanente del No-Tell Motel Stanza 206. Predefinito: 70000€$");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPrice", "Prezzo permanente Las Palapas Motel");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPriceDesc", "Prezzo di proprietà permanente del Las Palapas Motel Stanza 111. Predefinito: 80000€$");
   }
  
   protected func DefineSubtitles() -> Void {
@@ -617,18 +680,21 @@ public class Korean extends ModLocalizationPackage {
     this.Text("RentMotel-Room-Kabuki", "카부키 모텔 객실");
     this.Text("RentMotel-Room-Dewdrop", "듀드롭 인 모텔 객실");
     this.Text("RentMotel-Room-NoTell", "노텔 모텔 객실");
+    this.Text("RentMotel-Room-LasPalapas", "Las Palapas 모텔 객실");
 
     // Mappin titles
     this.Text("RentMotel-Title-Sunset", "선셋 모텔 102호");
     this.Text("RentMotel-Title-Kabuki", "카부키 모텔 203호");
     this.Text("RentMotel-Title-Dewdrop", "듀드롭 인 모텔 106호");
     this.Text("RentMotel-Title-NoTell", "노텔 모텔 206호");
+    this.Text("RentMotel-Title-LasPalapas", "Las Palapas 모텔 111호");
 
     // Mappin descriptions
     this.Text("RentMotel-Desc-Sunset", "대여 가능한 모텔 객실");
     this.Text("RentMotel-Desc-Kabuki", "대여 가능한 모텔 객실");
     this.Text("RentMotel-Desc-Dewdrop", "대여 가능한 모텔 객실");
     this.Text("RentMotel-Desc-NoTell", "대여 가능한 모텔 객실");
+    this.Text("RentMotel-Desc-LasPalapas", "대여 가능한 모텔 객실");
 
     // UI strings
     this.Text("RentMotel-UI-OpenDoor", "문 열기");
@@ -656,6 +722,8 @@ public class Korean extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPriceDesc", "기본값: 1000€$");
     this.Text("RentMotel-Settings-NoTellPrice", "노텔 모텔 206호");
     this.Text("RentMotel-Settings-NoTellPriceDesc", "기본값: 700€$");
+    this.Text("RentMotel-Settings-LasPalapasPrice", "Las Palapas 모텔 111호");
+    this.Text("RentMotel-Settings-LasPalapasPriceDesc", "기본값: 800€$");
     this.Text("RentMotel-Settings-ExtendedDays", "연장 대여 기간 (일)");
     this.Text("RentMotel-Settings-ExtendedDaysDesc", "연장 대여의 일수를 설정합니다. 기본값: 7일. 가격에 10% 할인이 포함됩니다.");
     this.Text("RentMotel-Settings-PermanentToggle", "영구 대여 활성화");
@@ -668,6 +736,8 @@ public class Korean extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPermanentPriceDesc", "듀드롭 인 모텔 106호의 영구 소유 가격. 기본값: 100000€$");
     this.Text("RentMotel-Settings-NoTellPermanentPrice", "노텔 모텔 영구 가격");
     this.Text("RentMotel-Settings-NoTellPermanentPriceDesc", "노텔 모텔 206호의 영구 소유 가격. 기본값: 70000€$");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPrice", "Las Palapas 모텔 영구 가격");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPriceDesc", "Las Palapas 모텔 111호의 영구 소유 가격. 기본값: 80000€$");
   }
 
   protected func DefineSubtitles() -> Void {
@@ -682,18 +752,21 @@ public class German extends ModLocalizationPackage {
     this.Text("RentMotel-Room-Kabuki", "Kabuki Motel Zimmer");
     this.Text("RentMotel-Room-Dewdrop", "Dewdrop Inn Motel Zimmer");
     this.Text("RentMotel-Room-NoTell", "No-Tell Motel Zimmer");
+    this.Text("RentMotel-Room-LasPalapas", "Las Palapas Motel Zimmer");
 
     // Mappin titles
     this.Text("RentMotel-Title-Sunset", "Sunset Motel Zimmer 102");
     this.Text("RentMotel-Title-Kabuki", "Kabuki Motel Zimmer 203");
     this.Text("RentMotel-Title-Dewdrop", "Dewdrop Inn Motel Zimmer 106");
     this.Text("RentMotel-Title-NoTell", "No-Tell Motel Zimmer 206");
+    this.Text("RentMotel-Title-LasPalapas", "Las Palapas Motel Zimmer 111");
 
     // Mappin descriptions
     this.Text("RentMotel-Desc-Sunset", "Mietbares Motelzimmer");
     this.Text("RentMotel-Desc-Kabuki", "Mietbares Motelzimmer");
     this.Text("RentMotel-Desc-Dewdrop", "Mietbares Motelzimmer");
     this.Text("RentMotel-Desc-NoTell", "Mietbares Motelzimmer");
+    this.Text("RentMotel-Desc-LasPalapas", "Mietbares Motelzimmer");
 
     // UI strings
     this.Text("RentMotel-UI-OpenDoor", "Tür Öffnen");
@@ -721,6 +794,8 @@ public class German extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPriceDesc", "Standard: 1000€$");
     this.Text("RentMotel-Settings-NoTellPrice", "No-Tell Motel Zimmer 206");
     this.Text("RentMotel-Settings-NoTellPriceDesc", "Standard: 700€$");
+    this.Text("RentMotel-Settings-LasPalapasPrice", "Las Palapas Motel Zimmer 111");
+    this.Text("RentMotel-Settings-LasPalapasPriceDesc", "Standard: 800€$");
     this.Text("RentMotel-Settings-ExtendedDays", "Verlängerte Mietdauer (Tage)");
     this.Text("RentMotel-Settings-ExtendedDaysDesc", "Anzahl der Tage für die verlängerte Mietoption. Standard: 7 Tage. Der Preis beinhaltet 10% Rabatt.");
     this.Text("RentMotel-Settings-PermanentToggle", "Dauerhaftes Mieten aktivieren");
@@ -733,6 +808,8 @@ public class German extends ModLocalizationPackage {
     this.Text("RentMotel-Settings-DewdropPermanentPriceDesc", "Preis für dauerhaften Besitz des Dewdrop Inn Zimmer 106. Standard: 100000€$");
     this.Text("RentMotel-Settings-NoTellPermanentPrice", "No-Tell Motel Dauerpreis");
     this.Text("RentMotel-Settings-NoTellPermanentPriceDesc", "Preis für dauerhaften Besitz des No-Tell Motel Zimmer 206. Standard: 70000€$");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPrice", "Las Palapas Motel Dauerpreis");
+    this.Text("RentMotel-Settings-LasPalapasPermanentPriceDesc", "Preis für dauerhaften Besitz des Las Palapas Motel Zimmer 111. Standard: 80000€$");
   }
 
   protected func DefineSubtitles() -> Void {

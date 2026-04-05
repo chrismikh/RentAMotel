@@ -28,7 +28,7 @@ RoomDefinitions.ROOM_DEFINITIONS = {
         roomId = "sunset_motel_room_102",
         locKeyRoomName = "RentMotel-Room-Sunset",
         doorHash = 10025113471746604205ULL,
-        paymentTerminalHash = 2454332936290437600ULL,
+        paymentTerminalHash = 4025005290165206500ULL,
         rentCost = Config.prices.sunset_motel_room_102 or 450,
         roomBoundsMin = { x = 1657.0, y = -796.3, z = 49.5 },
         roomBoundsMax = { x = 1666.6, y = -786.0, z = 52.9 }
@@ -38,7 +38,7 @@ RoomDefinitions.ROOM_DEFINITIONS = {
         locKeyRoomName = "RentMotel-Room-Kabuki",
         doorHash = 1867170616709106376ULL,
         backDoorHash = 14602689378209513153ULL,
-        paymentTerminalHash = 8068600755530504000ULL,
+        paymentTerminalHash = 12456836990694730000ULL,
         rentCost = Config.prices.kabuki_motel_room_203 or 700,
         roomBoundsMin = { x = -1248.5, y = 1969.0, z = 11.7 },
         roomBoundsMax = { x = -1238.0, y = 1982.3, z = 14.8 }
@@ -47,7 +47,7 @@ RoomDefinitions.ROOM_DEFINITIONS = {
         roomId = "DewdropInn_motel_room_106",
         locKeyRoomName = "RentMotel-Room-Dewdrop",
         doorHash = 7178334462812897738ULL,
-        paymentTerminalHash = 4029866856386479600ULL,
+        paymentTerminalHash = 7514225112585029000ULL,
         rentCost = Config.prices.DewdropInn_motel_room_106 or 1000,
         roomBoundsMin = { x = -562.80, y = -821.5, z = 8.0 },
         roomBoundsMax = { x = -554.1, y = -812.1, z = 11.2 },
@@ -55,11 +55,20 @@ RoomDefinitions.ROOM_DEFINITIONS = {
     {
         roomId = "NoTell_motel_room_206",
         locKeyRoomName = "RentMotel-Room-NoTell",
-        doorHash = 7494599788290938000ULL,
+        doorHash = 16078154153734214000ULL,
         paymentTerminalHash = 7352168567788151353ULL,
         rentCost = Config.prices.NoTell_motel_room_206 or 700,
         roomBoundsMin = { x = -1139.0, y = 1307.185,  z = 27.9 },
         roomBoundsMax = { x = -1127.6685, y = 1319.1003, z = 31.0 }
+    },
+    {
+        roomId = "LasPalapas_motel_room_111",
+        locKeyRoomName = "RentMotel-Room-LasPalapas",
+        doorHash = 7910523153461348000ULL,
+        paymentTerminalHash = 10691950758177309000ULL,
+        rentCost = Config.prices.LasPalapas_motel_room_111 or 800,
+        roomBoundsMin = { x = -1057.0, y = -1515.0,  z = 30.0 },
+        roomBoundsMax = { x = -1045.0, y = -1505.0, z = 33.5 }
     }
 }
 
